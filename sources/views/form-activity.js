@@ -24,7 +24,7 @@ export default class PopupView extends JetView {
 						//{ view:"datepicker", label:"Time",type:"time",name: "Time"}
 					]},
 					{view: "checkbox",label:"Completed",name:"State",css:"checkboxLabel"},
-					{cols:[
+					{ cols: [
 						{view:"spacer"},
 						{view:"button",localId:"add_save_button",width: 110,
 							click: () => {
@@ -57,8 +57,8 @@ export default class PopupView extends JetView {
 	}
     
 	showWindow(id) {
-		if(id) {
-			var values = activity_collection.getItem(id);
+		if (id) {
+			let values = activity_collection.getItem(id);
 			this.getForm().setValues(values);
 		} else {
 			this.getForm().clear();	
@@ -69,14 +69,14 @@ export default class PopupView extends JetView {
 	}
     
 	add() {
-		if(this.getForm().validate()) {
+		if (this.getForm().validate()) {
 			activity_collection.add(this.getValues());
 			this.getForm().hide();
 		}
 	}
     
 	update() {
-		if(this.getForm().validate()) {
+		if (this.getForm().validate()) {
 			activity_collection.updateItem(this.getValues().id,this.getValues());
 			this.getForm().hide();
 		}

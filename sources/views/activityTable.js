@@ -4,8 +4,9 @@ import {activity_type_collection} from "models/activityType-collection";
 import {contacts_collection} from "models/contacts-collection";
 import PopupView from "./form-activity";
 
-export default class DataView extends JetView{
-	config(){
+export default class DataView extends JetView {
+	config() {
+        
 		var toolbar = {
 			view: "toolbar",
 			elements: [
@@ -31,10 +32,10 @@ export default class DataView extends JetView{
 				{ id:"trash-icon", header: "",template: "{common.trashIcon()}",width:50},
 			],
 			onClick: {
-				"fa-pencil":(e, id) => {
+				"fa-pencil": (e, id) => {
 					this._jetPopup.showWindow(id);
 				},
-				"fa-trash":function(e, id) {
+				"fa-trash": function(e, id) {
 					webix.confirm({
 						text:"Do you still want to remove field?",
 						callback: function(result) {
@@ -45,8 +46,7 @@ export default class DataView extends JetView{
 						}
 					});
 				}
-			},
-			
+			},	
 		};
 
 		var ui = {
@@ -55,11 +55,12 @@ export default class DataView extends JetView{
 				activityTable
 			]
 		};
+        
 		return ui;
 	}
+    
 	init() {
 		this._jetPopup = this.ui(PopupView);
 		this.$$("activityDataTable").sync(activity_collection);
 	}
-	
 }

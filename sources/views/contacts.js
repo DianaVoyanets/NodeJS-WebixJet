@@ -4,6 +4,7 @@ import ContactsInformation from "views/contactsInformation";
 
 export default class Contacts extends JetView {
 	config() {
+        
 		var contactsList = {
 			view: "list",
 			id: "contacts-list",
@@ -14,29 +15,25 @@ export default class Contacts extends JetView {
 			on: {
 				"onAfterSelect": (id) => {
 					var path = "contacts?id="+id;
-					webix.delay(()=>{
+					webix.delay(() => {
 						this.show(path);
 					});
-                
 				}
 			},
 		};
         
 		var ui = {
-			rows:[
-				{
-					cols: [
-						contactsList,
-						ContactsInformation
-                        
-					]
-				}
-
+			rows:[{
+				cols: [
+					contactsList,
+					ContactsInformation        
+				]}
 			]
 		};
-		return ui;
         
+		return ui;  
 	}
+    
 	init() {
 		this.$$("contacts-list").sync(contacts_collection);
 	}
@@ -44,7 +41,7 @@ export default class Contacts extends JetView {
 	urlChange(view) {
 		contacts_collection.waitData.then(()=>{
 			var id = this.getParam("id") || contacts_collection.getFirstId();
-			if(contacts_collection.exists(id)) {
+			if (contacts_collection.exists(id)) {
 				view.queryView({view:"list"}).select(id);
 			}
 		});

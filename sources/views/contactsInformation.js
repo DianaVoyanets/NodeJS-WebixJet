@@ -8,35 +8,32 @@ export default class ContactsInformation extends JetView {
 			view: "toolbar",
 			localId: "my_toolbar",
 			height:50, 
-			cols: [
-				{ 
-					view: "label",
-					localId: "mylabel",
-					label: "#FirstName# #LastName#", 
-				},
-				{view: "spacer"},
-				{
-					view: "button",
-					type:"icon",
-					icon: "trash",
-					label: "Delete",
-					width: 90,
-				},
-				{
-					view: "button",
-					type: "icon",
-					icon: "edit",
-					label: "Edit",
-					width: 90
-				}
-			]
+			cols: [{ 
+				view: "label",
+				localId: "mylabel",
+				label: "#FirstName# #LastName#", 
+			},
+			{ view: "spacer" },
+			{
+				view: "button",
+				type: "icon",
+				icon: "trash",
+				label: "Delete",
+				width: 90,
+			},
+			{
+				view: "button",
+				type: "icon",
+				icon: "edit",
+				label: "Edit",
+				width: 90
+			}]
 		}; 
     
 		var templateOne = {
-			view:"template",
+			view: "template",
 			localId: "templateOne",
-			template:
-                "<figure><div class='avatar'></div><figcaption>#Value# #Icon#</figcaption</figure>",
+			template: "<figure><div class='avatar'></div><figcaption>#Value# #Icon#</figcaption</figure>",
 		};
         
 		var templateTwo = {
@@ -66,23 +63,30 @@ export default class ContactsInformation extends JetView {
 						templateTwo,
 						templateThree
 					],
-				}],
+				}
+			],
 		};
+        
 		return ui;
 	}
     
 	urlChange(view) {
-		var id = this.getParam("id");
+		let id = this.getParam("id");
 		contacts_collection.waitData.then(()=>{
-			if(id && contacts_collection.exists(id)) {
-				view.queryView({view:"label"}).setValue(contacts_collection.getItem(id).FirstName + " " + contacts_collection.getItem(id).LastName);
-				this.$$("templateOne").setValues(contacts_collection.getItem(id));
-				this.$$("templateTwo").setValues(contacts_collection.getItem(id));
-				this.$$("templateThree").setValues(contacts_collection.getItem(id));
-				var statusValueId = contacts_collection.getItem(id).StatusID;
-				if(!status_collection.exists(statusValueId)) {
-					this.$$("templateOne").parse({Value:"No Status",Icon:"No Icon"});
+			if (id && contacts_collection.exists(id)) {
+				let contactsValues = contacts_collection.getItem(id);
+                
+				view.queryView({view:"label"}).setValue(contactsValues.FirstName + " " + contactsValues.LastName);
+                
+				this.$$("templateOne").setValues(contactsValues);
+				this.$$("templateTwo").setValues(contactsValues);
+				this.$$("templateThree").setValues(contactsValues);
+                
+				let statusValueId = contactsValues.StatusID;
+				if (!status_collection.exists(statusValueId)) {
+					this.$$("templateOne").parse({Value: "No Status",Icon: "No Icon"});
 				}
+                
 				this.$$("templateOne").setValues(status_collection.getItem(statusValueId));
 			}
 		});
