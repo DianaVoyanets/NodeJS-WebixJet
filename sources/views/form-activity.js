@@ -68,7 +68,9 @@ export default class PopupView extends JetView {
 	showWindow(id) {
 		if (id) {
 			let values = activity_collection.getItem(id);
-			this.$$("form").setValues(values);
+			this.getForm().setValues(values);
+		} else {
+			this.getForm().clear();
 		}
 		this.getRoot().show();
 		this.$$("add_save_button").setValue(id ? "Save" : "Add");
