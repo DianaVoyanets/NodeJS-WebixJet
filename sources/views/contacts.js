@@ -6,20 +6,25 @@ export default class Contacts extends JetView {
 	config() {
         
 		var contactsList = {
-			view: "list",
-			id: "contacts-list",
-			select: true,
-			gravity: 0.5,
-			css: "contacts_list",
-			template:"<div>#FirstName# #LastName#<br>#Email#</div>",
-			on: {
-				"onAfterSelect": (id) => {
-					var path = "contacts?id="+id;
-					webix.delay(() => {
-						this.show(path);
-					});
-				}
-			},
+			rows: [
+				{	view: "list",
+					id: "contacts-list",
+					select: true,
+					gravity: 0.5,
+					css: "contacts_list",
+					template:"<div>#FirstName# #LastName#<br>#Email#</div>",
+					on: {
+						"onAfterSelect": (id) => {
+							var path = "contacts?id="+id;
+							webix.delay(() => {
+								this.show(path);
+							});
+						}
+					},
+				},
+				{view: "button",name:"Add",id:"add_button",type:"htmlbutton",label:"<i class='fa fa-plus-square'> Add contact</i>",width: 350},
+				
+			]
 		};
         
 		var ui = {

@@ -3,5 +3,4 @@ codebase/
 node_modules/
 *.log
 dist/
-Webix-Pro/
 backend/
