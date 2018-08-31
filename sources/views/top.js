@@ -11,9 +11,9 @@ export default class TopView extends JetView{
 			layout:"y",
 			template:"<span class='webix_icon fa-#icon# top-icon'></span> #value# ",
 			data:[
-				{ value:_("Contacts"), id:"contacts", icon:"users",data: [
-					{ id: "contactList", value: "Contacts List",icon: "list-alt"},
-					{ id: "contactDataTable",value: "Contacts Datatable",icon:"wpforms"},
+				{ value:_("Employees"), id:"contacts", icon:"users",data: [
+					{ id: "employeesList", value: "Employees List",icon: "list-alt"},
+					{ id: "employeesDataTable",value: "Employees Datatable",icon:"wpforms"},
 				]},
 				{ value:_("Activities"),id:"activities",icon:"calendar",data: [
 					{id: "activityTable",value: "Activity Datatable",icon:"wpforms"},

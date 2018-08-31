@@ -39,16 +39,24 @@ var ActivityType = sequelize.define("activityType",{
 	Icon: Sequelize.STRING
 });
 
+var Company = sequelize.define("companies",{
+	Company: Sequelize.STRING
+})
+
+
 sequelize.sync({ force: true }).then(() => {
 
+	Company.create({Company:"Epam"});
+	Company.create({Company:"XBSoftWare"});
+	
 	Contacts.create({
 		Address:"qeqwe",
 		Birthday: new Date(),
-		Company:"qwewqe",
 		Email:"alex@gmail.com",
 		FirstName:"qweqwe",
 		Job:"qwewqe",
 		LastName:"",
+		Company: "Epam",
 		Phone:"",
 		Photo:"",
 		Skype:"",
@@ -82,5 +90,5 @@ sequelize.sync({ force: true }).then(() => {
 });
 
 module.exports = {
-	Contacts, Activity, Statuses, ActivityType
+	Contacts, Activity, Statuses, ActivityType,Company
 };

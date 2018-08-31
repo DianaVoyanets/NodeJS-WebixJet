@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import {contacts_collection} from "models/contacts-collection";
 import {status_collection} from "models/status-collection";
+import {company_collection} from "models/company-collection";
 
 export default class ContactsForm extends JetView {
 	config() {
@@ -17,7 +18,7 @@ export default class ContactsForm extends JetView {
 					{view:"datepicker",labelWidth:135,label:_("Joining date"),name:"StartDate"},
 					{view:"combo",labelWidth:135,label:_("Status"),name:"StatusID",options: { body:{template:"#Value#",data:status_collection}}},
 					{view:"text",labelWidth:135,label:_("Job"),name:"Job"},
-					{view:"text",labelWidth:135,label:_("Company"),name:"Company"},
+					{view:"combo",labelWidth:135,label:_("Company"),name:"Company",options: { body: {template:"#Company#",data:company_collection}}},
 					{view:"text",labelWidth:135,label:_("Website"),name:"Website"},
 					{view:"text",labelWidth:135,label:_("Address"),name:"Address"}
 				]},

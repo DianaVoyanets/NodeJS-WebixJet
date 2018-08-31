@@ -35,5 +35,11 @@ app.delete("/activitytypes/:typeId",activityTypes.removeData);
 app.post("/activitytypes",activityTypes.addData);
 app.get("/activitytypes",activityTypes.getData);
 
+var companies = require("./controllers/companies");
+
+app.get("/companies",companies.getData);
+app.put("/companies/:companyId",companies.updateData);
+app.delete("/companies/:companyId",companies.removeData);
+app.post("/companies",companies.addData);
 
 app.listen(3006);

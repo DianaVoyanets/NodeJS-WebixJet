@@ -61,19 +61,6 @@ export default class ContactsInformation extends JetView {
 			}]
 		};
          
-		var avatarTemplate = {
-			view: "template", 
-			localId: "avatar-template",
-			gravity: 0.5,
-			template:(obj) => {				
-				return (
-					`${obj.Photo && obj.Photo !==" "? 
-						`<figure class='user-photo'><img src='${obj.Photo}'><figcaption><b>${obj.Icon}</b></figcaption></figure>` : 
-						`<div class='webix_icon fa-info-circle user_photo_template'></div><div class="photo_icon"><b>${obj.Icon}</b></div>`
-					}`
-				);
-			} 
-		};
 
 		var iconTemplate = {
 			view: "template", 
@@ -81,13 +68,13 @@ export default class ContactsInformation extends JetView {
 			template: (obj) =>{
 				return (
 					`<div class='wrapper'> 
-                        <div class="col-2">
-                            <span><i class='fa fa-envelope'> <b>${_("Email")}:</b> </i>${obj.Email}</span>
+						<div class="col-2">
+							<span><i class='fa fa-email'> <b>Phone:</b></i>${obj.Phone}</span> 
+							<span><i class='fa fa-email'> <b>Email:</b></i>${obj.Email}</span> 
                             <span><i class='fa fa-skype'> <b>${_("Skype")}:</b></i>${obj.Skype}</span>
-                            <span><i class='fa fa-tag'> <b>${_("Job")}:</b></i>${obj.Job}</span>
                         </div>
-                        <div class="col-3">
-                            <span><i class='fa fa-briefcase'> <b>${_("Company")}:</b></i>${obj.Company}</span>
+						<div class="col-3">
+							<span><i class='fa fa-tag'> <b>${_("Job")}:</b></i>${obj.Job}</span>
                             <span><i class='fa fa-calendar'> <b>${_("Date of birth")}:</b> </i>${obj.Birthday}</span>
                             <span><i class='fa fa-map-marker'> <b>${_("Location")}:</b></i>${obj.Address}</span>
                         </div>
@@ -100,7 +87,6 @@ export default class ContactsInformation extends JetView {
 			rows: [
 				toolbar,
 				{cols: [
-					avatarTemplate,
 					iconTemplate,
 				]},
 				contactsMultiview,
@@ -109,7 +95,11 @@ export default class ContactsInformation extends JetView {
         
 		return ui;
 	}
-    
+	
+	init() {
+
+	}
+
 	getId() {
 		return this.getParam("id",true);
 	}
@@ -122,20 +112,7 @@ export default class ContactsInformation extends JetView {
                 
 				this.$$("mylabel").setValue(contactsValues.FirstName + " " + contactsValues.LastName);
 				this.$$("icon-template").setValues(contactsValues);
-                
-				let statusValueId = contactsValues.StatusID;
-				if (!status_collection.exists(statusValueId)) {
-					avatarTemplate.parse({
-						Value: "No Status", 
-						Icon: "No Icon",
-						Photo: contactsValues.Photo
-					});
-				} else {
-					avatarTemplate.setValues({
-						...status_collection.getItem(statusValueId),
-						Photo: contactsValues.Photo
-					});
-				}
+				//let statusValueId = contactsValues.StatusID;
 			}
 		});
 		

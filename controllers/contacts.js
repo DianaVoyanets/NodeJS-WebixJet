@@ -15,13 +15,12 @@ module.exports = {
 		var querySort = req.query.sort;
 
 		if (querySort) {
-			if (querySort.Company) {
-				order.push(["Company", querySort.Company]);
-			}
     
 			if (querySort.Email) {
 				order.push(["Email", querySort.Email]);
 			}    
+
+			//if(querySort.)
 		}
 
 		var count = db.Contacts.findAndCountAll({ where });
