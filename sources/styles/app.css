@@ -96,6 +96,7 @@
 .app-right-panel{
 	border-top-left-radius:4px;
 }
+
 .app-right-panel .webix_layout_wide{
 	background: #fff;
 }
@@ -107,7 +108,8 @@ status_good{
 }
 
 .contacts_list .webix_list_item {
-	height: 80px !important;
+    width: 200px;
+	height: 50px !important;
 }
 
 .avatar {
@@ -213,4 +215,13 @@ figure {
 .photo_icon {
     width: 220px;
     text-align: center;
+}
+
+.add_company button {
+    text-align: center;
+}
+
+.delete_button {
+    float: right;
+    font-size: 25px;
 }

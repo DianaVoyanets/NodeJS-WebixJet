@@ -56,5 +56,6 @@ export default {
 	"Value": "Значение",
 	"Icon": "Значок",
 	"Edit activity": "Добавить активность",
-	"Add new contact": "Добавить новый контакт"
+	"Add new contact": "Добавить новый контакт",
+	"Employees": "Сотрудники"
 };

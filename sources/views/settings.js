@@ -1,7 +1,5 @@
 import {JetView} from "webix-jet";
-import TypePopupView from "views/status_activity_popup_form";
-import StatusTypeTable from "views/statusTypeTable";
-import ActivityTypeTable from "views/activityTypeTable";
+import {contacts_collection} from "models/contactsCollection";
 
 export default class Settings extends JetView {
 	config() {
@@ -17,47 +15,30 @@ export default class Settings extends JetView {
 			], click: () => this.toggleLanguage(),value: lang
 		};
         
-		var tabViewDataTables =  {
-			view: "tabview",
-			cells: [
-				{
-					header: _("Status Type"),
-					localId: "StatusesView",
-					body: {
-						rows: [
-							StatusTypeTable,
-							{ cols: [
-								{view:"spacer"},
-								{view: "spacer"},
-								{view:"button",value: _("Add statuses type"),autowidth:true,
-									click:() => {
-										this._jetPopup.showWindow("Add statuses type");
-										this.show("settings?id=addStatuses");
-									}}
-							]
-							}
-						]
+		var SettingsForm = {
+			view: "form",
+			width: 400,
+			localId: "filesUploaderForm",
+			elements:[
+				{ id:"FirstName",name: "FirstName",view:"combo",labelWidth:115, label:"Employe Name",options: { body:{template:"#FirstName# #LastName#",data:contacts_collection}} },
+				{cols:[
+					{ id: "fileName",view:"uploader", name:"attachments", value:"Attach File", upload:"http://localhost:3001/form/do-upload" },
+				]},
+				{ view:"button", value:"Save", type:"form",
+					click: () => {
+						console.log(this.$$("filesUploaderForm").getValues());
 					}
-				},
-				{
-					header: _("Activity Type"),
-					localId: "ActivitiesView",
-					body: {
-						rows: [
-							ActivityTypeTable,
-							{cols: [
-								{view:"spacer"},
-								{view: "spacer"},
-								{view:"button",value: _("Add activities type"),autowidth:true,
-									click:() => {
-										this._jetPopup.showWindow("Add activity type");
-										this.show("settings?id=addActivity");
-									}}       
-							]
-							}
-						]
-					}
+					
 				}
+			]
+		};
+        
+		var FilesEmployes = {
+			view:"datatable",
+			localId: "filesDatatable",
+			columns: [
+				{id:"Name",name: "name",header: "Employee Name"},
+				{id:"file",name:"fileName",header: "File Name"}
 			]
 		};
         
@@ -67,18 +48,15 @@ export default class Settings extends JetView {
 					{view: "spacer"},
 					{view: "spacer"},
 					localeSelector
-				]
-			},
-			{view:"spacer"},
-			tabViewDataTables,
-			]
-		};
+				]},
+			{cols: [
+				SettingsForm,
+				FilesEmployes
+			]},
+			{view: "spacer"},
+			]};
 	}
     
-	init() {
-		this._jetPopup = this.ui(TypePopupView);
-	}
-
 	toggleLanguage() {
 		const langs = this.app.getService("locale");
 		const value = this.getRoot().queryView({ name: "lang" }).getValue();

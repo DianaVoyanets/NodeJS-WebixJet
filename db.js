@@ -12,7 +12,7 @@ var Contacts = sequelize.define("contacts", {
 	StartDate: Sequelize.DATE,
 	StatusID: Sequelize.STRING,
 	Job: Sequelize.STRING,
-	Company: Sequelize.STRING,
+	CompanyID: Sequelize.INTEGER,
 	Website: Sequelize.STRING,
 	Address: Sequelize.STRING,
 	Email: Sequelize.STRING,
@@ -41,8 +41,12 @@ var ActivityType = sequelize.define("activityType",{
 
 var Company = sequelize.define("companies",{
 	Company: Sequelize.STRING
-})
+});
 
+var File = sequelize.define("file",{
+	name: Sequelize.STRING,
+	path: Sequelize.STRING
+});
 
 sequelize.sync({ force: true }).then(() => {
 
@@ -50,13 +54,13 @@ sequelize.sync({ force: true }).then(() => {
 	Company.create({Company:"XBSoftWare"});
 	
 	Contacts.create({
-		Address:"qeqwe",
+		Address:"qeqwe", 
 		Birthday: new Date(),
 		Email:"alex@gmail.com",
 		FirstName:"qweqwe",
 		Job:"qwewqe",
 		LastName:"",
-		Company: "Epam",
+		CompanyID: 1,
 		Phone:"",
 		Photo:"",
 		Skype:"",
@@ -87,8 +91,9 @@ sequelize.sync({ force: true }).then(() => {
 		Value: "state B",
 		Icon: "cogs"
 	});
+    
 });
 
 module.exports = {
-	Contacts, Activity, Statuses, ActivityType,Company
+	Contacts, Activity, Statuses, ActivityType,Company,File
 };

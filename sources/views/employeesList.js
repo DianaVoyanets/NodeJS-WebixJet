@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
-import {contacts_collection} from "models/contacts-collection";
-import {company_collection} from "models/company-collection";
+import {contacts_collection} from "models/contactsCollection";
+import {company_collection} from "models/companyCollection";
+import AddCompanyFormPopupView from "views/addCompanyPopupView";
 
 export default class Contacts extends JetView {
 	config() {
@@ -8,62 +9,88 @@ export default class Contacts extends JetView {
 
 		var contactsList = {
 			rows: [
+				{view: "toolbar",elements: [
+					{view:"label",label: "Companies"}
+				]},
 				{view:"search", localId:"search_contacts",placeholder: "search...",
 					on: {
 						"onTimedKeyPress":function() {
 							var value = this.getValue().toLowerCase();
 							this.$scope.$$("contacts-list").filter((obj) => {
- 								return obj.Company.toLowerCase().indexOf(value)==0;
+								return obj.Company.toLowerCase().indexOf(value)==0;
 							});
 						}
 					}},
 				{	
 					view: "list",
-					id: "contacts-list",
+					localId: "contacts-list",
 					select: true,
+					width: 280,
 					css: "contacts_list",
+					editable:true,
+					editor:"text",
 					template:(obj) => {
 						return (
-							`<span class="list-information">${obj.Company}</span>`
+							`<span class='delete_button'>×</span>
+							<span class="list-information">${obj.Company}</span>`
 						);
+					},
+					onClick: {
+						"delete_button":(e,id) => {
+							webix.confirm({
+								text: "Do you still want to delete this company?",
+								callback: function(result) {
+									if(result) {
+										company_collection.remove(id); 
+										return false;
+									}
+								}
+							});
+						}
+        
 					},
 					on: {
 						"onAfterSelect": (id) => {	
-								this.setParam("id", id, true);	
+							this.setParam("id", id, true);	
+							this.$$("contacts-datatable").sync(contacts_collection, () => {
+								this.$$("contacts-datatable").filter((obj) => {
+									return obj.CompanyID == this.$$("contacts-list").getSelectedItem().id;
+								});
+							});
 						},
 					},
 				},
 				{ 
 					view: "button",
-					id:"add_button",
+					localId:"add_button",
 					type:"iconButton",
 					icon: "plus",
-					label:_("Add employees"),
-					css: "add_contact",
-					width: 350,
-					click: () => {
-						this.app.callEvent("onClickContactsForm", []);
-						this.show("contactsForm");
+					label:_("Add company"),
+					width: 270,
+					css: "add_company",
+					click: (id) => {
+						this._jetPopup.showWindow(id);
 					} 
-				}]
+				}
+			]
 		};
 
 		var contactsDataTable = {
 			view: "datatable", 
 			localId: "contacts-datatable",
 			select: true,
+			editable:true,
 			columns: [
-				{id: "FirstName",header: "First Name"},
-				{id: "LastName",header: "Last Name"},
-				{id: "Phone",header: "Phone"}
+				{id: "FirstName",header: "First Name",editor: "text"},
+				{id: "LastName",header: "Last Name",editor:"text"},
+				{id: "Phone",header: "Phone",editor:"text"},
 			],
 			on: {
-				"onAfterSelect": () => {	
-					var id = this.$$("contacts-datatable").getSelectedItem().id;
+				"onAfterSelect": (id) => {	
 					this.show(`contactsInformation?id=${id}`);
 				},
 			},
-		}
+		};
          
 		var ui = {
 			rows:[{
@@ -82,30 +109,19 @@ export default class Contacts extends JetView {
 	}
 
 	init() {
+		this._jetPopup = this.ui(AddCompanyFormPopupView);
 		this.$$("contacts-datatable").sync(contacts_collection);
 		this.getContactsList().sync(company_collection);
+		//this.on(this.app,"onContactsFormCancel",() =>this.$$("contacts-datatable").select(contacts_collection.getFirstId()));
 		this.on(this.app,"onDataDelete",() => this.$$("contacts-datatable").select(contacts_collection.getFirstId()));
 		contacts_collection.data.attachEvent("onIdChange", (oldId,newId) => {
 			this.$$("contacts-datatable").select(newId);
 		});
-
 	}
 
-	urlChange() {
-		contacts_collection.waitData.then(()=>{
-			this.$$("contacts-datatable").sync(contacts_collection, () => {
-				this.$$("contacts-datatable").filter((obj) => {
-					return obj.Company == this.$$("contacts-list").getSelectedItem().id;
-				});
-			})
-			// var id = this.getParam("id") || contacts_collection.getFirstId();
-			// // if (contacts_collection.exists(id)) {
-			// // 	this.getContactsList().select(id);
-			// // }
-			// // else {
-			// // 	this.getContactsList().select(this.getContactsList().getFirstId());
-			// // 	this.getContactsList().showItem(id);
-			// // }
-		});
-	}
+	// urlChange() {
+	// 	contacts_collection.waitData.then(()=>{
+		
+	// 	});
+	// }
 }

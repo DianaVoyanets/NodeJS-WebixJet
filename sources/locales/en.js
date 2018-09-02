@@ -57,5 +57,6 @@ export default {
 	"Add new contact": "Add new contact",
 	"Icon": "Icon",
 	"Value": "Value",
-	"Add contact": "Add contact"
+    "Add contact": "Add contact",
+    "Employees": "Employees"
 };

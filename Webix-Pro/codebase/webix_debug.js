@@ -37771,7 +37771,7 @@ webix.jsonp = function(url, params, callback, master){
     return defer;
 };
 
-webix.jsonp.timer = 3000;
+webix.jsonp.timer = 3001;
 
 })();
 

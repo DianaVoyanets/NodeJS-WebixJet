@@ -1,9 +1,6 @@
 import {JetView} from "webix-jet";
-import {contacts_collection} from "models/contacts-collection";
-import {activity_collection} from "models/activity-collection";
-import {status_collection} from "models/status-collection";
-import contactsMultiview from "views/contactsMultiview";
-import {files_collection} from "models/files";
+import {contacts_collection} from "models/contactsCollection";
+import {activity_collection} from "models/activityCollection";
 
 export default class ContactsInformation extends JetView {
 	config() {
@@ -18,7 +15,19 @@ export default class ContactsInformation extends JetView {
 				localId: "mylabel",
 				label: "#FirstName# #LastName#", 
 			},
-			{ view: "spacer" },
+			{ 
+				view: "button",
+				id:"add_button",
+				type:"iconButton",
+				icon: "plus",
+				width: 120,
+				label:_("Add"),
+				css: "add_contact",
+				click: () => {
+					this.app.callEvent("onClickContactsForm", []);
+					this.show("contactsForm");
+				} 
+			},
 			{
 				view: "button",
 				type: "icon",
@@ -26,39 +35,26 @@ export default class ContactsInformation extends JetView {
 				label: _("Delete"),
 				width: 120,
 				click: () => {
-					let app = this.app;
-					let id = this.getParam("id",true);
+					let id = this.getParam("id");
 					webix.confirm({
-						text: "Do you still want to remove this contact?",
-						callback: function(result) {
+						text:"Do you still want to remove this employee?",
+						callback: (result) => {
 							if (result) {
 								let activitiesIds = activity_collection
 									.find((activity) => activity.ContactID == id)
 									.map((activity) => activity.id);
-                                
-								let filesIds = files_collection
-									.find((file) => file.ContactID == id)
-									.map((file) => file.id);
-                                
-								activity_collection.remove(activitiesIds);
-								files_collection.remove(filesIds);
-								contacts_collection.remove(id);
-								app.callEvent("onDataDelete",[]);
+								if(id) {
+									contacts_collection.remove(id);
+									activity_collection.remove(activitiesIds);
+									this.app.callEvent("onDataDelete",[]);
+								}
+								return;
 							}
 						}
 					});
-				}},
-			{
-				view: "button",
-				type: "icon",
-				icon: "edit",
-				label: _("Edit"),
-
-				width: 120,
-				click: () => {
-					this.show(`contactsForm?id=${this.getId()}`);
 				}
-			}]
+			},
+			]
 		};
          
 
@@ -69,8 +65,8 @@ export default class ContactsInformation extends JetView {
 				return (
 					`<div class='wrapper'> 
 						<div class="col-2">
-							<span><i class='fa fa-email'> <b>Phone:</b></i>${obj.Phone}</span> 
-							<span><i class='fa fa-email'> <b>Email:</b></i>${obj.Email}</span> 
+							<span><i class='fa fa-mobile'> <b>Phone:</b></i>${obj.Phone}</span> 
+							<span><i class='fa fa-envelope'> <b>Email:</b></i>${obj.Email}</span> 
                             <span><i class='fa fa-skype'> <b>${_("Skype")}:</b></i>${obj.Skype}</span>
                         </div>
 						<div class="col-3">
@@ -89,15 +85,10 @@ export default class ContactsInformation extends JetView {
 				{cols: [
 					iconTemplate,
 				]},
-				contactsMultiview,
 			],
 		};
         
 		return ui;
-	}
-	
-	init() {
-
 	}
 
 	getId() {
@@ -105,14 +96,12 @@ export default class ContactsInformation extends JetView {
 	}
     
 	urlChange() {
-		let avatarTemplate = this.$$("avatar-template");
-		webix.promise.all([contacts_collection.waitData,status_collection.waitData]).then(()=>{
+		contacts_collection.waitData.then(()=>{
 			if (this.getId() && contacts_collection.exists(this.getId())) {
 				let contactsValues = contacts_collection.getItem(this.getId());
                 
 				this.$$("mylabel").setValue(contactsValues.FirstName + " " + contactsValues.LastName);
 				this.$$("icon-template").setValues(contactsValues);
-				//let statusValueId = contactsValues.StatusID;
 			}
 		});
 		

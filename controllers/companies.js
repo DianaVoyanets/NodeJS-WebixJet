@@ -4,9 +4,9 @@ module.exports = {
 	getData : (req, res) => {
 		db.Company.findAll()
 			.then(data => res.json(data));
-    },
+	},
 
-    removeData: (req, res) => {
+	removeData: (req, res) => {
 		db.Company.findById(req.params.companyId)
 			.then((user) => 
 				user.destroy()
@@ -27,4 +27,4 @@ module.exports = {
 				res.json({}));
 	}
     
-}
+};

@@ -42,4 +42,7 @@ app.put("/companies/:companyId",companies.updateData);
 app.delete("/companies/:companyId",companies.removeData);
 app.post("/companies",companies.addData);
 
-app.listen(3006);
+let form = require("./controllers/formDoUpload");
+app.post("/form/do-upload", form.doUpload);
+
+app.listen(3001);

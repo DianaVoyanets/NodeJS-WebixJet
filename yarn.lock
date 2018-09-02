@@ -381,7 +381,7 @@ autoprefixer@^6.3.1:
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.7.7.tgz#1dbd1c835658e35ce3f9984099db00585c782014"
   dependencies:
     browserslist "^1.7.6"
-    caniuse-db "^1.0.30000634"
+    caniuse-db "^1.0.30010634"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^5.2.16"
@@ -1046,14 +1046,14 @@ browserslist@^1.3.6, browserslist@^1.5.2, browserslist@^1.7.6:
   version "1.7.7"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-1.7.7.tgz#0bd76704258be829b2398bb50e4b62d1a166b0b9"
   dependencies:
-    caniuse-db "^1.0.30000639"
+    caniuse-db "^1.0.30010639"
     electron-to-chromium "^1.2.7"
 
 browserslist@^2.1.2:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.4.0.tgz#693ee93d01e66468a6348da5498e011f578f87f8"
   dependencies:
-    caniuse-lite "^1.0.30000718"
+    caniuse-lite "^1.0.30010718"
     electron-to-chromium "^1.3.18"
 
 buffer-from@^1.0.0:
@@ -1154,17 +1154,17 @@ caniuse-api@^1.5.2:
   resolved "https://registry.yarnpkg.com/caniuse-api/-/caniuse-api-1.6.1.tgz#b534e7c734c4f81ec5fbe8aca2ad24354b962c6c"
   dependencies:
     browserslist "^1.3.6"
-    caniuse-db "^1.0.30000529"
+    caniuse-db "^1.0.30010529"
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000733"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000733.tgz#3a625bc41c7a9f99d59d64552857dd1af0edd9d4"
+caniuse-db@^1.0.30010529, caniuse-db@^1.0.30010634, caniuse-db@^1.0.30010639:
+  version "1.0.30010733"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30010733.tgz#3a625bc41c7a9f99d59d64552857dd1af0edd9d4"
 
-caniuse-lite@^1.0.30000718:
-  version "1.0.30000733"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000733.tgz#ebfc48254117cc0c66197a4536cb4397a6cfbccd"
+caniuse-lite@^1.0.30010718:
+  version "1.0.30010733"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30010733.tgz#ebfc48254117cc0c66197a4536cb4397a6cfbccd"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -3053,7 +3053,7 @@ json-schema@0.2.3:
 
 json-stable-stringify@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
+  resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300146ed445f88c4f9af"
   dependencies:
     jsonify "~0.0.0"
 

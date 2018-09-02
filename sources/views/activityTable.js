@@ -1,8 +1,8 @@
 import {JetView} from "webix-jet";
-import {activity_collection} from "models/activity-collection";
-import {activity_type_collection} from "models/activityType-collection";
-import {contacts_collection} from "models/contacts-collection";
-import PopupView from "./form_activity";
+import {activity_collection} from "models/activityCollection";
+import {activity_type_collection} from "models/activityTypeCollection";
+import {contacts_collection} from "models/contactsCollection";
+import PopupView from "./activityForm";
 
 export default class DataView extends JetView {
 	config() {
