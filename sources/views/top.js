@@ -13,7 +13,7 @@ export default class TopView extends JetView{
 			data:[
 				{ value:_("Employees"), id:"contacts", icon:"users",data: [
 					{ id: "employeesList", value: "Employees List",icon: "list-alt"},
-					{ id: "employeesDatatable",value: "Employees Datatable",icon:"wpforms"},
+					{ id: "employeesDataTable",value: "Employees Datatable",icon:"wpforms"},
 				]},
 				{ value:_("Activities"),id:"activities",icon:"calendar",data: [
 					{id: "activityTable",value: "Activity Datatable",icon:"wpforms"},

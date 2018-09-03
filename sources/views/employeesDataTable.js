@@ -9,10 +9,10 @@ export default class ContactsDataTable extends JetView{
 			view: "datatable",
 			localId: "contactsDatatable",
 			columns: [
-				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],sort:"server"},
-				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],sort:"server"},
-				{id: "Address",header: ["Address",{content:"serverFilter"}],sort:"server"},
-				{id: "Email",header: ["Email",{content:"serverFilter"}],sort:"server",width:160},
+				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:150,sort:"server"},
+				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:150,sort:"server"},
+				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 150,sort:"server"},
+				{id: "Email",header: ["Email",{content:"serverFilter"}],width:150,sort:"server",width:160},
 				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:140},
 				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:120},
 				{id: "Website",header: ["Website",{content:"serverFilter"}],fillspace:true,sort:"server"},
@@ -24,7 +24,7 @@ export default class ContactsDataTable extends JetView{
 				"fa-trash": function(e, id) {
 					webix.confirm({
 						text:"Do you still want to remove field?",
-						callback: function(result) {
+						callback: (result) => {
 							if(result) {
 								contacts_collection.remove(id);
 								return false;

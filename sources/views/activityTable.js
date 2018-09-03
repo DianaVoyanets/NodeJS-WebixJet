@@ -20,7 +20,10 @@ export default class DataView extends JetView {
 
 					}},
 				{ view: "button",name: "Refresh",id: "refresh_button",type: "iconButton",icon:"refresh",label: "Refresh",autowidth: true,
-					click: () => this.$$("activityDataTable").refresh()},
+					click: () => {
+						this.$$("activityDataTable").clearAll();
+						this.$$("activityDataTable").load("http://localhost:3001/activity/");
+					}},
 				{ view: "button",name:"Add",id:"add_button",type:"iconButton",icon: "plus",label: _("Add activity"),autowidth:true,
 					click:() => {
 						this._jetPopup.showWindow();
@@ -38,7 +41,6 @@ export default class DataView extends JetView {
 					columns:[
 						{ id:"State",header:"",template:"{common.checkbox()}",width: 50},
 						{ id:"TypeID", header:[_("Activity type"),{content:"selectFilter"}], width:250,sort:"string",options: activity_type_collection,fillspace:true},
-						//{ id:"DueDate", header:[_("Due data"),{ content:"datepickerFilter"}],width:250},
 						{ id:"Details", header:[_("Details"),{content:"textFilter"}],width:250,sort:"string"},
 						{ id:"ContactID", header:[_("Contact"),{content:"selectFilter"}],width:250,sort:"string",options: contacts_collection},
 						{ id:"trash-icon", header: "",template: "{common.trashIcon()}",width:50},

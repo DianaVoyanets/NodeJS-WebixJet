@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import {contacts_collection} from "models/contactsCollection";
+import {files_collection} from "models/files";
 
 export default class Settings extends JetView {
 	config() {
@@ -20,13 +21,14 @@ export default class Settings extends JetView {
 			width: 400,
 			localId: "filesUploaderForm",
 			elements:[
-				{ id:"FirstName",name: "FirstName",view:"combo",labelWidth:115, label:"Employe Name",options: { body:{template:"#FirstName# #LastName#",data:contacts_collection}} },
+				{ id:"ContactID",name: "ContactID",view:"combo",labelWidth:115, label:"Employe Name",options: { body:{template:"#FirstName# #LastName#",data:contacts_collection}} },
 				{cols:[
-					{ id: "fileName",view:"uploader", name:"attachments", value:"Attach File", upload:"http://localhost:3001/form/do-upload" },
-				]},
-				{ view:"button", value:"Save", type:"form",
+					{ id: "fileName",view:"uploader", name:"name", value:"Attach File", upload:"http://localhost:3001/formdoUpload"}]},
+				{ view:"button", value:"Save",
 					click: () => {
-						console.log(this.$$("filesUploaderForm").getValues());
+						let data = this.$$("filesUploaderForm").getValues();
+						console.log(data);
+						this.$$("filesDatatable").add(data);
 					}
 					
 				}
@@ -36,9 +38,11 @@ export default class Settings extends JetView {
 		var FilesEmployes = {
 			view:"datatable",
 			localId: "filesDatatable",
+			width: 400,
+			height: 500,
 			columns: [
-				{id:"Name",name: "name",header: "Employee Name"},
-				{id:"file",name:"fileName",header: "File Name"}
+				{id:"ContactID",name:"ContactID",header: "Employee Name",width: 200,options:contacts_collection},
+				{id:"name",name: "name",header: "File Name"},
 			]
 		};
         
@@ -51,7 +55,8 @@ export default class Settings extends JetView {
 				]},
 			{cols: [
 				SettingsForm,
-				FilesEmployes
+				FilesEmployes,
+				{view: "spacer"}
 			]},
 			{view: "spacer"},
 			]};
@@ -61,5 +66,9 @@ export default class Settings extends JetView {
 		const langs = this.app.getService("locale");
 		const value = this.getRoot().queryView({ name: "lang" }).getValue();
 		langs.setLang(value);
+	}
+
+	init() {
+		
 	}
 }

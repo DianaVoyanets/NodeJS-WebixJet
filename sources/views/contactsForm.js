@@ -15,13 +15,12 @@ export default class ContactsForm extends JetView {
 				{ rows: [
 					{ view:"text",label:_("First name"),name:"FirstName",invalidMessage:"First Name can not be empty",required:true},
 					{ view:"text",label:_("Last name"),name:"LastName",invalidMessage:"Last Name can not be empty",required:true},
-					//{view:"datepicker",label:_("Joining date"),name:"StartDate"},
 					{ view:"combo",label:_("Status"),name:"StatusID",options: { body:{template:"#Value#",data:status_collection}}},
 					{ view:"text",label:_("Job"),name:"Job"},
-					{ view:"combo",label:_("Company"),name:"CompanyID",options: { body: {template:"#Company#",data:company_collection}},required:true},
+					{ view:"combo",label:_("Company"),name:"CompanyID",options: { body: {template:"#Company#",data:company_collection}},required:true,invalidMessage:"Company can not be empty"},
 					{ view:"text",label:_("Website"),name:"Website"},
 					{ view:"text",label:_("Address"),name:"Address"},
-					{ view:"text",label:_("Email"),name:"Email",placeholder:"someone@example.com:",required:true},
+					{ view:"text",label:_("Email"),name:"Email",placeholder:"someone@example.com",required:true},
 					{ view:"text",label:_("Skype"),name:"Skype"},
 					{ view:"text",label:_("Phone"),name:"Phone",placeholder:"375-25-1234567", pattern:{ mask:"###-## #######", allow:/[0-9]/g}},
 					{ view:"spacer"},
@@ -41,7 +40,6 @@ export default class ContactsForm extends JetView {
 				"FirstName": webix.rules.isNotEmpty,
 				"LastName": webix.rules.isNotEmpty,
 				"Email": webix.rules.isEmail,
-				//"Company": webix.rules.isNotEmpty
 			},
 		};
         

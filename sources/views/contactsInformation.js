@@ -71,7 +71,7 @@ export default class ContactsInformation extends JetView {
                         </div>
 						<div class="col-3">
 							<span><i class='fa fa-tag'> <b>${_("Job")}:</b></i>${obj.Job}</span>
-                            <span><i class='fa fa-calendar'> <b>${_("Date of birth")}:</b> </i>${obj.Birthday}</span>
+							<span><i class='fa fa-telegram'> <b>${_("Website")}:</b> </i>${obj.Website}</span>
                             <span><i class='fa fa-map-marker'> <b>${_("Location")}:</b></i>${obj.Address}</span>
                         </div>
                     </div>`

@@ -26,8 +26,6 @@ export default class AddCompanyFormPopupView extends JetView {
 	}
     
 	showWindow(id) {
-		// let values = contacts_collection.getItem(id);
-		// this.$$("form").setValues(values);
 		this.getRoot().show();
 	}
     

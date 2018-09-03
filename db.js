@@ -44,6 +44,7 @@ var Company = sequelize.define("companies",{
 });
 
 var File = sequelize.define("file",{
+	ContactID: Sequelize.INTEGER,
 	name: Sequelize.STRING,
 	path: Sequelize.STRING
 });

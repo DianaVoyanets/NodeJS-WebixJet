@@ -112,16 +112,9 @@ export default class Contacts extends JetView {
 		this._jetPopup = this.ui(AddCompanyFormPopupView);
 		this.$$("contacts-datatable").sync(contacts_collection);
 		this.getContactsList().sync(company_collection);
-		//this.on(this.app,"onContactsFormCancel",() =>this.$$("contacts-datatable").select(contacts_collection.getFirstId()));
 		this.on(this.app,"onDataDelete",() => this.$$("contacts-datatable").select(contacts_collection.getFirstId()));
 		contacts_collection.data.attachEvent("onIdChange", (oldId,newId) => {
 			this.$$("contacts-datatable").select(newId);
 		});
 	}
-
-	// urlChange() {
-	// 	contacts_collection.waitData.then(()=>{
-		
-	// 	});
-	// }
 }
