@@ -10,7 +10,7 @@ module.exports = {
 				ContactID: 1,
 				name: files.upload.name,
 				path: files.upload.path
-			}).then(saved => res.json({ value: saved.name }));
+			}).then(saved => res.json({value: saved.name }));
 		});
 	}
 };

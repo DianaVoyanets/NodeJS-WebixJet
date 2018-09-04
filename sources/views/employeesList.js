@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import {contacts_collection} from "models/contactsCollection";
 import {company_collection} from "models/companyCollection";
+import {activity_collection} from "models/activityCollection";
 import AddCompanyFormPopupView from "views/addCompanyPopupView";
 
 export default class Contacts extends JetView {
@@ -74,6 +75,54 @@ export default class Contacts extends JetView {
 				}
 			]
 		};
+		var toolbar = {
+			view: "toolbar",
+			localId: "my_toolbar",
+			height:50, 
+			cols: [
+				{view: "spacer"},
+				{ 
+					view: "button",
+					id:"add_button",
+					type:"iconButton",
+					icon: "plus",
+					width: 120,
+					label:_("Add"),
+					css: "add_contact",
+					click: () => {
+						this.app.callEvent("onClickContactsForm", []);
+						this.show("contactsForm");
+					} 
+				},
+				{
+					view: "button",
+					type: "icon",
+					icon: "trash",
+					label: _("Delete"),
+					width: 120,
+					click: () => {
+						let id = this.getParam("id");
+						webix.confirm({
+							text:"Do you still want to remove this employee?",
+							callback: (result) => {
+								if (result) {
+									let activitiesIds = activity_collection
+										.find((activity) => activity.ContactID == id)
+										.map((activity) => activity.id);
+									if(id) {
+										contacts_collection.remove(id);
+										activity_collection.remove(activitiesIds);
+										this.app.callEvent("onDataDelete",[]);
+									}
+									return;
+								}
+							}
+						});
+					}
+				},
+			]
+		};
+         
 
 		var contactsDataTable = {
 			view: "datatable", 
@@ -96,7 +145,10 @@ export default class Contacts extends JetView {
 			rows:[{
 				cols: [
 					contactsList,
-					contactsDataTable,
+					{rows: [
+						toolbar,
+						contactsDataTable,
+					]},
 					{$subview: true},        
 				]}
 			]
@@ -115,6 +167,6 @@ export default class Contacts extends JetView {
 		this.on(this.app,"onDataDelete",() => this.$$("contacts-datatable").select(contacts_collection.getFirstId()));
 		contacts_collection.data.attachEvent("onIdChange", (oldId,newId) => {
 			this.$$("contacts-datatable").select(newId);
-		});
+		});             
 	}
 }

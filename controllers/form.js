@@ -13,9 +13,9 @@ module.exports = {
 				user.destroy()
 					.then(()=>
 						res.json({})));
-    },
+	},
 
-    addData: (req, res) => {
+	addData: (req, res) => {
 		db.File.create(req.body).then((obj) => 
 			res.json({ id: obj.id }));
 	},

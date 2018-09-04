@@ -21,17 +21,16 @@ export default class Settings extends JetView {
 			width: 400,
 			localId: "filesUploaderForm",
 			elements:[
-				{ id:"ContactID",name: "ContactID",view:"combo",labelWidth:115, label:"Employe Name",options: { body:{template:"#FirstName# #LastName#",data:contacts_collection}} },
-				{cols:[
-					{ id: "fileName",view:"uploader", name:"name", value:"Attach File", upload:"http://localhost:3001/formdoUpload"}]},
+				{ id:"ContactID",name: "ContactID",view:"combo",labelWidth:115, label:"Employee Name",options: { body:{template:"#FirstName# #LastName#",data:contacts_collection}} },
+				{ name: "name",view:"uploader",link: "mylist",value:"Attach File", upload:"http://localhost:3001/formdoUpload"},
+				{ view:"list",  id:"mylist", type:"uploader",autoheight:true, borderless:true},
 				{ view:"button", value:"Save",
 					click: () => {
 						let data = this.$$("filesUploaderForm").getValues();
-						console.log(data);
 						this.$$("filesDatatable").add(data);
+						this.$$("filesUploaderForm").clear();
 					}
-					
-				}
+				},
 			]
 		};
         
@@ -42,7 +41,7 @@ export default class Settings extends JetView {
 			height: 500,
 			columns: [
 				{id:"ContactID",name:"ContactID",header: "Employee Name",width: 200,options:contacts_collection},
-				{id:"name",name: "name",header: "File Name"},
+				{id:"name",header: "File Name"},
 			]
 		};
         

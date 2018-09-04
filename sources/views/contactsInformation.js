@@ -13,51 +13,11 @@ export default class ContactsInformation extends JetView {
 			cols: [{ 
 				view: "label",
 				localId: "mylabel",
+				align: "center",
 				label: "#FirstName# #LastName#", 
-			},
-			{ 
-				view: "button",
-				id:"add_button",
-				type:"iconButton",
-				icon: "plus",
-				width: 120,
-				label:_("Add"),
-				css: "add_contact",
-				click: () => {
-					this.app.callEvent("onClickContactsForm", []);
-					this.show("contactsForm");
-				} 
-			},
-			{
-				view: "button",
-				type: "icon",
-				icon: "trash",
-				label: _("Delete"),
-				width: 120,
-				click: () => {
-					let id = this.getParam("id");
-					webix.confirm({
-						text:"Do you still want to remove this employee?",
-						callback: (result) => {
-							if (result) {
-								let activitiesIds = activity_collection
-									.find((activity) => activity.ContactID == id)
-									.map((activity) => activity.id);
-								if(id) {
-									contacts_collection.remove(id);
-									activity_collection.remove(activitiesIds);
-									this.app.callEvent("onDataDelete",[]);
-								}
-								return;
-							}
-						}
-					});
-				}
-			},
-			]
+			}],
 		};
-         
-
+        
 		var iconTemplate = {
 			view: "template", 
 			localId:"icon-template",
