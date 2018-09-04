@@ -8,8 +8,8 @@ module.exports = {
 
 	removeData: (req, res) => {
 		db.Activity.findById(req.params.activityId)
-			.then((user) => 
-				user.destroy()
+			.then((activity) => 
+			activity.destroy()
 					.then(()=>
 						res.json({})));
 	},
@@ -21,8 +21,8 @@ module.exports = {
     
 	updateData: (req, res) => {
 		db.Activity.findById(req.params.activityId)
-			.then((contact) => 
-				contact.update(req.body))
+			.then((activity) => 
+			activity.update(req.body))
 			.then(() => 
 				res.json({}));
 	}

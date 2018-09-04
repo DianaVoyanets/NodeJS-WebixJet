@@ -7,12 +7,12 @@ var app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-var contacts = require("./controllers/contacts");
+var employees = require("./controllers/employees");
 
-app.put("/contacts/:contactId",contacts.updateData);
-app.delete("/contacts/:contactId",contacts.removeData);
-app.post("/contacts",contacts.addData);
-app.get("/contacts",contacts.getData);
+app.put("/employees/:employeesId",employees.updateData);
+app.delete("/employees/:employeesId",employees.removeData);
+app.post("/employees",employees.addData);
+app.get("/employees",employees.getData);
 
 var activity = require("./controllers/activity");
 

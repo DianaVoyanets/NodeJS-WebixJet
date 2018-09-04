@@ -1,13 +1,12 @@
 import {JetView} from "webix-jet";
-import {company_collection} from "models/companyCollection";
+import {companyCollection} from "models/companyCollection";
 
 export default class AddCompanyFormPopupView extends JetView {
 	config() {
-		const _ = this.app.getService("locale")._;
 		return {
 			view:"window", 
 			move:true,
-			localId: "form-popup",
+			localId: "formPopup",
 			head:"Add company",
 			position:"center",
 			body:{
@@ -18,7 +17,7 @@ export default class AddCompanyFormPopupView extends JetView {
 					{cols:[
 						{view: "spacer"},
 						{view: "button",value: "Add",width: 120,click:() => this.saveData()},
-						{view: "button",value: "Cancel",width: 120,click: ()=> this.$$("form-popup").hide()},
+						{view: "button",value: "Cancel",width: 120,click: () => this.hide()},
 					]}
 				],
 			}
@@ -32,8 +31,12 @@ export default class AddCompanyFormPopupView extends JetView {
 	saveData() {
 		var values = this.$$("form").getValues();
 		if (this.$$("form").validate()) {
-			company_collection.add(values);
-			this.$$("form").hide();
+			companyCollection.add(values);
+			this.hide();
 		}
+	}
+
+	hide() {
+		return this.$$("formPopup").hide();
 	}
 }

@@ -8,8 +8,8 @@ module.exports = {
 
 	removeData: (req, res) => {
 		db.ActivityType.findById(req.params.typeId)
-			.then((user) => 
-				user.destroy()
+			.then((activityType) => 
+			activityType.destroy()
 					.then(()=>
 						res.json({})));
 	},

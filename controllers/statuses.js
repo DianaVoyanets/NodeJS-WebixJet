@@ -8,8 +8,8 @@ module.exports = {
 
 	removeData: (req, res) => {
 		db.Statuses.findById(req.params.statusId)
-			.then((user) => 
-				user.destroy()
+			.then((statuses) => 
+			statuses.destroy()
 					.then(()=>
 						res.json({})));
 	},
@@ -21,8 +21,8 @@ module.exports = {
     
 	updateData: (req, res) => {
 		db.Statuses.findById(req.params.statusId)
-			.then((contact) => 
-				contact.update(req.body))
+			.then((statuses) => 
+			statuses.update(req.body))
 			.then(() => 
 				res.json({}));
 	}

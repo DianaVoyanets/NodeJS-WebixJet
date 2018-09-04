@@ -1,33 +1,32 @@
 import {JetView} from "webix-jet";
-import {contacts_collection} from "models/contactsCollection";
-import {company_collection} from "models/companyCollection";
-import {activity_collection} from "models/activityCollection";
+import {employeesCollection} from "models/employeesCollection";
+import {companyCollection} from "models/companyCollection";
+import {activityCollection} from "models/activityCollection";
 import AddCompanyFormPopupView from "views/addCompanyPopupView";
 
-export default class Contacts extends JetView {
+export default class Employees extends JetView {
 	config() {
-		const _ = this.app.getService("locale")._;
 
-		var contactsList = {
+		var employeesList = {
 			rows: [
 				{view: "toolbar",elements: [
 					{view:"label",label: "Companies"}
 				]},
-				{view:"search", localId:"search_contacts",placeholder: "search...",
+				{view:"search", localId:"searchEmployees",placeholder: "search...",
 					on: {
 						"onTimedKeyPress":function() {
 							var value = this.getValue().toLowerCase();
-							this.$scope.$$("contacts-list").filter((obj) => {
+							this.$scope.$$("employeesList").filter((obj) => {
 								return obj.Company.toLowerCase().indexOf(value)==0;
 							});
 						}
 					}},
 				{	
 					view: "list",
-					localId: "contacts-list",
+					localId: "employeesList",
 					select: true,
 					width: 280,
-					css: "contacts_list",
+					css: "employees_list",
 					editable:true,
 					editor:"text",
 					template:(obj) => {
@@ -42,7 +41,7 @@ export default class Contacts extends JetView {
 								text: "Do you still want to delete this company?",
 								callback: function(result) {
 									if(result) {
-										company_collection.remove(id); 
+										companyCollection.remove(id); 
 										return false;
 									}
 								}
@@ -53,9 +52,9 @@ export default class Contacts extends JetView {
 					on: {
 						"onAfterSelect": (id) => {	
 							this.setParam("id", id, true);	
-							this.$$("contacts-datatable").sync(contacts_collection, () => {
-								this.$$("contacts-datatable").filter((obj) => {
-									return obj.CompanyID == this.$$("contacts-list").getSelectedItem().id;
+							this.$$("employeesDatatable").sync(employeesCollection, () => {
+								this.$$("employeesDatatable").filter((obj) => {
+									return obj.CompanyID == this.$$("employeesList").getSelectedItem().id;
 								});
 							});
 						},
@@ -63,10 +62,10 @@ export default class Contacts extends JetView {
 				},
 				{ 
 					view: "button",
-					localId:"add_button",
+					localId:"addButton",
 					type:"iconButton",
 					icon: "plus",
-					label:_("Add company"),
+					label:"Add company",
 					width: 270,
 					css: "add_company",
 					click: (id) => {
@@ -75,43 +74,45 @@ export default class Contacts extends JetView {
 				}
 			]
 		};
+
 		var toolbar = {
 			view: "toolbar",
-			localId: "my_toolbar",
+			localId: "toolbar",
 			height:50, 
 			cols: [
 				{view: "spacer"},
 				{ 
 					view: "button",
-					id:"add_button",
+					id:"addButton",
 					type:"iconButton",
 					icon: "plus",
 					width: 120,
-					label:_("Add"),
-					css: "add_contact",
+					label:"Add",
+					css: "addEmployees",
 					click: () => {
-						this.app.callEvent("onClickContactsForm", []);
-						this.show("contactsForm");
+						this.app.callEvent("onClickemployeesForm", []);
+						this.show("employeesForm");
 					} 
 				},
 				{
 					view: "button",
 					type: "icon",
 					icon: "trash",
-					label: _("Delete"),
+					label: "Delete",
 					width: 120,
 					click: () => {
 						let id = this.getParam("id");
+						console.log(id);
 						webix.confirm({
 							text:"Do you still want to remove this employee?",
 							callback: (result) => {
 								if (result) {
-									let activitiesIds = activity_collection
+									let activitiesIds = activityCollection
 										.find((activity) => activity.ContactID == id)
 										.map((activity) => activity.id);
-									if(id) {
-										contacts_collection.remove(id);
-										activity_collection.remove(activitiesIds);
+									if (id) {
+										employeesCollection.remove(id);
+										activityCollection.remove(activitiesIds);
 										this.app.callEvent("onDataDelete",[]);
 									}
 									return;
@@ -124,19 +125,19 @@ export default class Contacts extends JetView {
 		};
          
 
-		var contactsDataTable = {
+		var employeesDatatable = {
 			view: "datatable", 
-			localId: "contacts-datatable",
+			localId: "employeesDatatable",
 			select: true,
 			editable:true,
 			columns: [
 				{id: "FirstName",header: "First Name",editor: "text"},
 				{id: "LastName",header: "Last Name",editor:"text"},
-				{id: "Phone",header: "Phone",editor:"text"},
+				{id: "Phone",header: "Phone",editor:"text",width:150},
 			],
 			on: {
 				"onAfterSelect": (id) => {	
-					this.show(`contactsInformation?id=${id}`);
+					this.show(`employeesInformation?id=${id}`);
 				},
 			},
 		};
@@ -144,10 +145,10 @@ export default class Contacts extends JetView {
 		var ui = {
 			rows:[{
 				cols: [
-					contactsList,
+					employeesList,
 					{rows: [
 						toolbar,
-						contactsDataTable,
+						employeesDatatable,
 					]},
 					{$subview: true},        
 				]}
@@ -156,17 +157,17 @@ export default class Contacts extends JetView {
 		return ui;  
 	}
     
-	getContactsList() {
-		return this.$$("contacts-list");
+	getEmployeesList() {
+		return this.$$("employeesList");
 	}
 
 	init() {
 		this._jetPopup = this.ui(AddCompanyFormPopupView);
-		this.$$("contacts-datatable").sync(contacts_collection);
-		this.getContactsList().sync(company_collection);
-		this.on(this.app,"onDataDelete",() => this.$$("contacts-datatable").select(contacts_collection.getFirstId()));
-		contacts_collection.data.attachEvent("onIdChange", (oldId,newId) => {
-			this.$$("contacts-datatable").select(newId);
+		this.$$("employeesDatatable").sync(employeesCollection);
+		this.$$("employeesList").sync(companyCollection);
+		this.on(this.app,"onDataDelete",() => this.$$("employeesDatatable").select(employeesCollection.getFirstId()));
+		employeesCollection.data.attachEvent("onIdChange", (oldId,newId) => {
+			this.$$("employeesDatatable").select(newId);
 		});             
 	}
 }

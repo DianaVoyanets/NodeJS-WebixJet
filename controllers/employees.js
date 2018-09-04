@@ -2,7 +2,7 @@ var db = require("../db");
 
 module.exports = {
 	getData: (req, res) =>  {
-		var limit = (req.query.count || 20)*1;
+		var limit = (req.query.count || 100)*1;
 		var offset = (req.query.start || 0)*1;
 
 		var where = req.query.filter ? { 
@@ -49,8 +49,8 @@ module.exports = {
 			}   
 		}
 
-		var count = db.Contacts.findAndCountAll({ where });
-		var page = db.Contacts.findAll({
+		var count = db.Employees.findAndCountAll({ where });
+		var page = db.Employees.findAll({
 			where, limit, offset, order
 		});
         
@@ -60,24 +60,24 @@ module.exports = {
 	},
 
 	removeData: (req, res) => {
-		db.Contacts.findById(req.params.contactId)
-			.then((user) => 
-				user.destroy())
+		db.Employees.findById(req.params.employeesId)
+			.then((employees) => 
+				employees.destroy())
 			.then(() => 
 				res.json({}));
 	},
     
 	addData: (req, res) => {
-		db.Contacts.create(req.body)
+		db.Employees.create(req.body)
 			.then((obj) => 
 				res.json({ id: obj.id })
 			);
 	},
     
 	updateData: (req, res) => {
-		db.Contacts.findById(req.params.contactId)
-			.then((contact) => 
-				contact.update(req.body))
+		db.Employees.findById(req.params.employeesId)
+			.then((employees) => 
+				employees.update(req.body))
 			.then(() => 
 				res.json({}));
 	}

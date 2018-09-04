@@ -2,7 +2,6 @@ import {JetView,plugins} from "webix-jet";
 
 export default class TopView extends JetView{
 	config() {	
-		const _ = this.app.getService("locale")._;
 		var menu = {
 			view: "sidebar",
 			select: true,
@@ -11,14 +10,14 @@ export default class TopView extends JetView{
 			layout:"y",
 			template:"<span class='webix_icon fa-#icon# top-icon'></span> #value# ",
 			data:[
-				{ value:_("Employees"), id:"contacts", icon:"users",data: [
+				{ value:"Employees", id:"Employees", icon:"users",data: [
 					{ id: "employeesList", value: "Employees List",icon: "list-alt"},
-					{ id: "employeesDataTable",value: "Employees Datatable",icon:"wpforms"},
+					{ id: "employeesDatatable",value: "Employees Datatable",icon:"wpforms"},
 				]},
-				{ value:_("Activities"),id:"activities",icon:"calendar",data: [
+				{ value:"Activities",id:"activities",icon:"calendar",data: [
 					{id: "activityTable",value: "Activity Datatable",icon:"wpforms"},
 				]},
-				{ value:_("Settings"),id:"settings",icon:"cogs"}
+				{ value:"Settings",id:"settings",icon:"cogs"}
 			]
 		};
 

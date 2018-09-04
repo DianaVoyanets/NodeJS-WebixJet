@@ -1,15 +1,15 @@
 import {JetView} from "webix-jet";
-import {activity_collection} from "models/activityCollection";
-import {activity_type_collection} from "models/activityTypeCollection";
-import {contacts_collection} from "models/contactsCollection";
+import {activityCollection} from "models/activityCollection";
+import {activityTypeCollection} from "models/activityTypeCollection";
+import {employeesCollection} from "models/employeesCollection";
 
 export default class PopupView extends JetView {
 	config() {
-		const _ = this.app.getService("locale")._;
+
 		return {
 			view:"window", 
 			move:true,
-			localId: "form-popup",
+			localId: "formPopup",
 			head:"#value#",
 			position:"center",
 			width: 700,
@@ -18,22 +18,15 @@ export default class PopupView extends JetView {
 				localId: "form",
 				width: 450,
 				elements:[
-					{ view:"textarea",labelWidth:100,label:_("Details"), name:"Details",invalidMessage:"Type can not be empty",required:true},
-					{ view:"combo", labelWidth:100,label:_("Type"), name:"TypeID",options: { body:{template:"#Value#",data:activity_type_collection}},invalidMessage:"Type can not be empty",required:true},
-					{ localId: "contact",labelWidth:100,view:"combo", label:_("Contacts"), name:"ContactID",options: { body:{template:"#FirstName#"+ " " + "#LastName#",data:contacts_collection}},invalidMessage:"Contact can not be empty",required:true},
-					{ margin:5, cols:[
-						//{ view:"datepicker", labelWidth:100,label:_("Data"),name:"DueDate",format:"%d-%m-%Y"},
-						//{ view:"datepicker", label:"Time",type:"time",name: "Time"}
-					]},
-					{ view: "checkbox",labelWidth:104,label:_("CompletedForm"),name:"State",css:"checkboxLabel"},
+					{view:"textarea",labelWidth:100,label:"Details", name:"Details",invalidMessage:"Type can not be empty",required:true},
+					{view:"combo", labelWidth:100,label:"Type", name:"TypeID",options: { body:{template:"#Value#",data:activityTypeCollection}},invalidMessage:"Type can not be empty",required:true},
+					{view:"combo",localId: "contact",labelWidth:100,label:"Employee", name:"ContactID",options: { body:{template:"#FirstName#"+ " " + "#LastName#",data:employeesCollection}},invalidMessage:"Contact can not be empty",required:true},
+					{view: "checkbox",label:"Completed",name:"State",css:"checkboxLabel"},
 					{ cols: [
-						{ view:"spacer"},
-						{ view:"button",localId:"add_save_button",width: 110,
-							click: () => {
-								this.saveDate();
-							}
-						},
-						{ view:"button",value: _("Cancel"),width: 110,click:()=> this.getForm().hide()},
+						{view:"spacer"},
+						{view:"button",localId:"addSaveButton",width: 110,
+							click: () => this.saveDate()},
+						{view:"button",value: "Cancel",width: 110,click:()=> this.getForm().hide()},
 					]}
 				],
 				rules: {
@@ -56,29 +49,28 @@ export default class PopupView extends JetView {
 	}
     
 	saveDate() {
-		var values = this.$$("form").getValues();
+		var values = this.getValues();
 		if (this.getForm().validate()) {
 			if (!this.getValues().id) {
-				activity_collection.add(values);
+				activityCollection.add(values);
 			}
 			else {
-				activity_collection.updateItem(values.id, values);
+				activityCollection.updateItem(values.id, values);
 			}
 			this.hideWindow();
 		}
 	}
     
 	showWindow(id) {
-		const _ = this.app.getService("locale")._;
 		if (id) {
-			let values = activity_collection.getItem(id);
+			let values = activityCollection.getItem(id);
 			this.getForm().setValues(values);
 		} else {
 			this.getForm().clear();
 		}
 		this.getRoot().show();
-		this.$$("add_save_button").setValue(id ? _("Save") : _("Add"));
-		this.$$("form-popup").getHead().setHTML(id ? _("Edit activity") : _("Add activity"));
+		this.$$("addSaveButton").setValue(id ? "Save" : "Add");
+		this.$$("formPopup").getHead().setHTML(id ? "Edit activity" : "Add activity");
 	}
     
 	hideWindow() {

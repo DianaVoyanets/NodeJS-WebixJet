@@ -1,30 +1,29 @@
 import {JetView} from "webix-jet";
-import {activity_collection} from "models/activityCollection";
-import {activity_type_collection} from "models/activityTypeCollection";
-import {contacts_collection} from "models/contactsCollection";
+import {activityCollection} from "models/activityCollection";
+import {activityTypeCollection} from "models/activityTypeCollection";
+import {employeesCollection} from "models/employeesCollection";
 import PopupView from "./activityForm";
 
 export default class DataView extends JetView {
 	config() {
-		const _ = this.app.getService("locale")._;
 
 		var toolbar = {
 			view: "toolbar",
 			elements: [
-				{ view: "spacer"},
-				{ view: "button",name: "Export",id: "export_button",type:"iconButton",icon:"file-excel-o",label: "Export to Excel",autowidth: true,
+				{view: "spacer"},
+				{view: "button",name: "Export",id: "export_button",type:"iconButton",icon:"file-excel-o",label: "Export to Excel",autowidth: true,
 					click:()=>{
 						webix.toExcel(this.$$("activityDataTable"),
 							{ filename:"ActivityTable",ignore: { "State" :true,"pencil-icon" :true,"trash-icon": true}}
 						);
 
 					}},
-				{ view: "button",name: "Refresh",id: "refresh_button",type: "iconButton",icon:"refresh",label: "Refresh",autowidth: true,
+				{view: "button",name: "Refresh",id: "refresh_button",type: "iconButton",icon:"refresh",label: "Refresh",autowidth: true,
 					click: () => {
 						this.$$("activityDataTable").clearAll();
-						this.$$("activityDataTable").load("http://localhost:3001/activity/");
+						this.$$("activityDataTable").sync(activityCollection);
 					}},
-				{ view: "button",name:"Add",id:"add_button",type:"iconButton",icon: "plus",label: _("Add activity"),autowidth:true,
+				{view: "button",name:"Add",id:"addButton",type:"iconButton",icon: "plus",label: "Add activity",autowidth:true,
 					click:() => {
 						this._jetPopup.showWindow();
 					}
@@ -40,9 +39,9 @@ export default class DataView extends JetView {
 					select: true,
 					columns:[
 						{ id:"State",header:"",template:"{common.checkbox()}",width: 50},
-						{ id:"TypeID", header:[_("Activity type"),{content:"selectFilter"}], width:250,sort:"string",options: activity_type_collection,fillspace:true},
-						{ id:"Details", header:[_("Details"),{content:"textFilter"}],width:250,sort:"string"},
-						{ id:"ContactID", header:[_("Contact"),{content:"selectFilter"}],width:250,sort:"string",options: contacts_collection},
+						{ id:"TypeID", header:["Activity type",{content:"selectFilter"}], width:250,sort:"string",options: activityTypeCollection,fillspace:true},
+						{ id:"Details", header:["Details",{content:"textFilter"}],width:250,sort:"string"},
+						{ id:"ContactID", header:["Contact",{content:"selectFilter"}],width:250,sort:"string",options: employeesCollection},
 						{ id:"trash-icon", header: "",template: "{common.trashIcon()}",width:50},
 					],
 					on: {
@@ -57,7 +56,7 @@ export default class DataView extends JetView {
 								text:"Do you still want to remove field?",
 								callback: function(result) {
 									if (result) {
-										activity_collection.remove(id);
+										activityCollection.remove(id);
 										return false;
 									}
 								}
@@ -80,6 +79,6 @@ export default class DataView extends JetView {
     
 	init() {
 		this._jetPopup = this.ui(PopupView);
-		this.$$("activityDataTable").sync(activity_collection);
+		this.$$("activityDataTable").sync(activityCollection);
 	}
 }

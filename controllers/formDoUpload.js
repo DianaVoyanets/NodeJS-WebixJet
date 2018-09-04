@@ -7,7 +7,6 @@ module.exports = {
 		var form = new formidable.IncomingForm();
 		form.parse(req, function(err, fields, files) {
 			db.File.create({ 
-				ContactID: 1,
 				name: files.upload.name,
 				path: files.upload.path
 			}).then(saved => res.json({value: saved.name }));

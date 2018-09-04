@@ -6,10 +6,9 @@ var sequelize = new Sequelize("sampledb","root","1",{
 	storage: "database.sqlite"
 });
 
-var Contacts = sequelize.define("contacts", {
+var Employees = sequelize.define("Employees", {
 	FirstName: Sequelize.STRING,
 	LastName: Sequelize.STRING,
-	StartDate: Sequelize.DATE,
 	StatusID: Sequelize.STRING,
 	Job: Sequelize.STRING,
 	CompanyID: Sequelize.INTEGER,
@@ -18,7 +17,6 @@ var Contacts = sequelize.define("contacts", {
 	Email: Sequelize.STRING,
 	Skype: Sequelize.STRING,
 	Phone: Sequelize.STRING,
-	Birthday: Sequelize.DATE
 });
 
 var Activity = sequelize.define("activity",{
@@ -26,7 +24,6 @@ var Activity = sequelize.define("activity",{
 	TypeID: Sequelize.INTEGER,
 	State: Sequelize.STRING,
 	ContactID: Sequelize.INTEGER,
-	DueDate: Sequelize.DATE
 });
 
 var Statuses = sequelize.define("statuses",{
@@ -51,23 +48,20 @@ var File = sequelize.define("file",{
 
 sequelize.sync({ force: true }).then(() => {
 
+	Company.create({Company:"XB Software"});
 	Company.create({Company:"Epam"});
-	Company.create({Company:"XBSoftWare"});
-	
-	Contacts.create({
-		Address:"qeqwe", 
-		Birthday: new Date(),
-		Email:"alex@gmail.com",
-		FirstName:"qweqwe",
-		Job:"qwewqe",
-		LastName:"",
-		CompanyID: 1,
-		Phone:"",
-		Photo:"",
-		Skype:"",
-		StartDate:new Date("01-01-0001"),
-		StatusID:0,
-		Website:""
+
+	Employees.create({
+			Address:"qeqwe", 
+			Email:"alex@gmail.com",
+			FirstName:"qweqwe",
+			Job:"qwewqe",
+			LastName:"",
+			CompanyID: 1,
+			Phone:"",
+			Skype:"",
+			StatusID:0,
+			Website:""
 	});
 
 	Activity.create({
@@ -75,7 +69,6 @@ sequelize.sync({ force: true }).then(() => {
 		TypeID: 2,
 		State: "Open",
 		ContactID: 2,
-		DueDate: new Date("01-01-0001")
 	});
         
 	Statuses.create({
@@ -96,5 +89,5 @@ sequelize.sync({ force: true }).then(() => {
 });
 
 module.exports = {
-	Contacts, Activity, Statuses, ActivityType,Company,File
+	Employees, Activity, Statuses, ActivityType,Company,File
 };

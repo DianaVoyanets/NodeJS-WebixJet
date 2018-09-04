@@ -1,23 +1,23 @@
 import {JetView} from "webix-jet";
-import {contacts_collection} from "models/contactsCollection";
-import {company_collection} from "models/companyCollection";
+import {employeesCollection} from "models/employeesCollection";
+import {companyCollection} from "models/companyCollection";
 import FormPopupView from "views/employeesEditForm";
 
-export default class ContactsDataTable extends JetView{
+export default class employeesDatatable extends JetView{
 	config() {
 		return {
 			view: "datatable",
-			localId: "contactsDatatable",
+			localId: "employeesDatatable",
 			columns: [
-				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:150,sort:"server"},
-				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:150,sort:"server"},
-				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 150,sort:"server"},
-				{id: "Email",header: ["Email",{content:"serverFilter"}],width:150,sort:"server",width:160},
-				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:140},
-				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:120},
-				{id: "Website",header: ["Website",{content:"serverFilter"}],fillspace:true,sort:"server"},
-				{id: "CompanyID",header: "Company",options: company_collection},
-				{id:"pencil-icon", header:"",template: "{common.editIcon()}",width:50},
+				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:160,sort:"server"},
+				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:160,sort:"server"},
+				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 160,sort:"server"},
+				{id: "Email",header: ["Email",{content:"serverFilter"}],width:160,sort:"server",width:160},
+				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:160},
+				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:160},
+				{id: "Website",header: ["Website",{content:"serverFilter"}],sort:"server",width: 160},
+				{id: "CompanyID",header: "Company",options: companyCollection,width: 160,fillspace:true},
+				{id: "pencil-icon", header:"",template: "{common.editIcon()}",width:50},
 				{id: "trash-icon", header: "",template: "{common.trashIcon()}",width:50},
 			],
 			onClick: {
@@ -26,7 +26,7 @@ export default class ContactsDataTable extends JetView{
 						text:"Do you still want to remove field?",
 						callback: (result) => {
 							if(result) {
-								contacts_collection.remove(id);
+								employeesCollection.remove(id);
 								return false;
 							}
 						}
@@ -36,11 +36,11 @@ export default class ContactsDataTable extends JetView{
 					this._jetPopup.showWindow(id);
 				}
 			},
-			url: "http://localhost:3001/contacts/",
+			url: "http://localhost:3001/employees",
+			save: "rest->http://localhost:3001/employees/"
 		};
 	}
 	init() {
 		this._jetPopup = this.ui(FormPopupView);
-		this.$$("contactsDatatable").sync(contacts_collection);
 	}
 }

@@ -8,8 +8,8 @@ module.exports = {
 
 	removeData: (req, res) => {
 		db.Company.findById(req.params.companyId)
-			.then((user) => 
-				user.destroy()
+			.then((company) => 
+				company.destroy()
 					.then(()=>
 						res.json({})));
 	},
@@ -21,8 +21,8 @@ module.exports = {
     
 	updateData: (req, res) => {
 		db.Company.findById(req.params.companyId)
-			.then((contact) => 
-				contact.update(req.body))
+			.then((company) => 
+				company.update(req.body))
 			.then(() => 
 				res.json({}));
 	}
