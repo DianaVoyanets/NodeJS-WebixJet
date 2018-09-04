@@ -1,6 +1,5 @@
 import {JetView} from "webix-jet";
 import {contacts_collection} from "models/contactsCollection";
-import {files_collection} from "models/files";
 
 export default class Settings extends JetView {
 	config() {
@@ -10,7 +9,7 @@ export default class Settings extends JetView {
 
 
 		var localeSelector = {
-			name: "lang", optionWidth: 120, view: "segmented", label: _("Language"), options: [
+			name: "lang", optionWidth: 120, view: "segmented", options: [
 				{ id: "en", value: _("English") },
 				{ id: "ru", value: _("Russian") }
 			], click: () => this.toggleLanguage(),value: lang
@@ -48,6 +47,7 @@ export default class Settings extends JetView {
 		return {
 			rows: [{
 				cols: [
+					{view: "spacer"},
 					{view: "spacer"},
 					{view: "spacer"},
 					localeSelector

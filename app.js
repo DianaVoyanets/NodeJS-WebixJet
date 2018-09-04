@@ -45,10 +45,5 @@ app.post("/companies",companies.addData);
 let formUpload = require("./controllers/formDoUpload");
 app.post("/formdoUpload",formUpload.doUpload);
 
-let form = require("./controllers/form");
-app.get("/form",form.getData);
-app.delete("/form",form.removeData);
-app.put("/form",form.updateData);
-app.post("/form", form.addData);
 
 app.listen(3001);
