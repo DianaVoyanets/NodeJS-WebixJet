@@ -20,6 +20,8 @@ export default class employeesDatatable extends JetView{
 				{id: "pencil-icon", header:"",template: "{common.editIcon()}",width:50},
 				{id: "trash-icon", header: "",template: "{common.trashIcon()}",width:50},
 			],
+			// datafetch:15,
+			// loadahead:30,
 			onClick: {
 				"fa-trash": function(e, id) {
 					webix.confirm({

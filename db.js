@@ -52,18 +52,18 @@ sequelize.sync({ force: true }).then(() => {
 	Company.create({Company:"Epam"});
 
 	Employees.create({
-			Address:"qeqwe", 
-			Email:"alex@gmail.com",
-			FirstName:"qweqwe",
-			Job:"qwewqe",
-			LastName:"",
-			CompanyID: 1,
-			Phone:"",
-			Skype:"",
-			StatusID:0,
-			Website:""
+		Address:"qeqwe", 
+		Email:"alex@gmail.com",
+		FirstName:"qweqwe",
+		Job:"qwewqe",
+		LastName:"",
+		CompanyID: 1,
+		Phone:"",
+		Skype:"",
+		StatusID:0,
+		Website:""
 	});
-
+	
 	Activity.create({
 		Details: "Some",
 		TypeID: 2,

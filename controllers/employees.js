@@ -2,7 +2,7 @@ var db = require("../db");
 
 module.exports = {
 	getData: (req, res) =>  {
-		var limit = (req.query.count || 100)*1;
+		var limit = (req.query.count || 20)*1;
 		var offset = (req.query.start || 0)*1;
 
 		var where = req.query.filter ? { 
@@ -17,6 +17,7 @@ module.exports = {
         
 		var order = [];
 		var querySort = req.query.sort;
+
 
 		if (querySort) {
     
@@ -49,13 +50,14 @@ module.exports = {
 			}   
 		}
 
-		var count = db.Employees.findAndCountAll({ where });
+		var count = db.Employees.findAndCountAll({});
+
 		var page = db.Employees.findAll({
-			where, limit, offset, order
+			where,limit,offset,order
 		});
-        
-		Promise.all([count, page]).then(data => res.json({
-			pos:offset, total_count:data[0], data:data[1] 
+
+		Promise.all([count,page]).then(data => res.json({
+			pos:offset, total_count:data[0], data: data[1] 
 		}));
 	},
 
