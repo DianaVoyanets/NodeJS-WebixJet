@@ -12,7 +12,7 @@ export default class employeesDatatable extends JetView{
 				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:160,sort:"server"},
 				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:160,sort:"server"},
 				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 160,sort:"server"},
-				{id: "Email",header: ["Email",{content:"serverFilter"}],width:160,sort:"server",width:160},
+				{id: "Email",header: ["Email",{content:"serverFilter"}],width:160,sort:"server"},
 				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:160},
 				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:160},
 				{id: "Website",header: ["Website",{content:"serverFilter"}],sort:"server",width: 160},
