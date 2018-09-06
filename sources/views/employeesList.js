@@ -146,10 +146,12 @@ export default class Employees extends JetView {
 			rows:[{
 				cols: [
 					employeesList,
+					{view:"resizer"},
 					{rows: [
 						toolbar,
 						employeesDatatable,
 					]},
+					{view:"resizer"},
 					{$subview: true},        
 				]}
 			]

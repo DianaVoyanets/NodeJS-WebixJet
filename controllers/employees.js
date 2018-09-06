@@ -14,13 +14,14 @@ module.exports = {
 			Skype: { $like: "%" + req.query.filter.Skype + "%" },
 			Website: { $like: "%" + req.query.filter.Website + "%" },
 		} : {};
-        
-		var order = [];
-		var querySort = req.query.sort;
+		
+		
 
+		var querySort = req.query.sort;
+		var order = [];
 
 		if (querySort) {
-    
+
 			if (querySort.FirstName) {
 				order.push(["FirstName", querySort.FirstName]);
 			}    
