@@ -15,42 +15,17 @@ module.exports = {
 			Website: { $like: "%" + req.query.filter.Website + "%" },
 		} : {};
 		
-		
-
+	
 		var querySort = req.query.sort;
 		var order = [];
 
 		if (querySort) {
-
-			if (querySort.FirstName) {
-				order.push(["FirstName", querySort.FirstName]);
-			}    
-
-			if (querySort.LastName) {
-				order.push(["LastName", querySort.LastName]);
-			}    
-            
-			if (querySort.Address) {
-				order.push(["Address", querySort.Address]);
-			}    
-
-			if (querySort.Email) {
-				order.push(["Email", querySort.Email]);
-			}    
-
-			if (querySort.Phone) {
-				order.push(["Phone", querySort.Phone]);
-			}    
-
-			if (querySort.Skype) {
-				order.push(["Skype", querySort.Skype]);
-			}  
-              
-			if (querySort.Website) {
-				order.push(["Website", querySort.Website]);
-			}   
+			var key = Object.entries(req.query.sort)[0][0];
+			if (querySort[key]) {
+				order.push([key,querySort[key]]);
+			}
 		}
-
+		
 		var count = db.Employees.findAndCountAll({});
 
 		var page = db.Employees.findAll({
