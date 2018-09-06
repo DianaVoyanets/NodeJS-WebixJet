@@ -18,28 +18,28 @@ export default class employeesForm extends JetView {
 			view: "form",
 			localId: "employeesForm",
 			cols: [
-				{ rows: [
-					{view:"text",label:"First name",name:"FirstName",invalidMessage:"First Name can not be empty",required:true},
-					{view:"text",label:"Last name",name:"LastName",invalidMessage:"Last Name can not be empty",required:true},
-					{view:"combo",label:"Status",name:"StatusID",options: { body:{template:"#Value#",data:statusCollection}}},
-					{view:"text",label:"Job",name:"Job"},
-					{view:"combo",label:"Company",name:"CompanyID",options: { body: {template:"#Company#",data:companyCollection}},required:true,invalidMessage:"Company can not be empty"},
-					{view:"text",label:"Website",name:"Website"},
-					{view:"text",label:"Address",name:"Address"},
-					{view:"text",label:"Email",name:"Email",placeholder:"someone@example.com",required:true},
-					{view:"text",label:"Skype",name:"Skype"},
-					{view:"text",label:"Phone",name:"Phone",placeholder:"375-25-1234567", pattern:{ mask:"###-## #######", allow:/[0-9]/g}},
+				{ margin: 5,rows: [
+					{view:"text",label:"First name",labelWidth:100,name:"FirstName",invalidMessage:"First Name can not be empty",required:true},
+					{view:"text",label:"Last name",labelWidth:100,name:"LastName",invalidMessage:"Last Name can not be empty",required:true},
+					{view:"combo",label:"Status",labelWidth:100,name:"StatusID",options: { body:{template:"#Value#",data:statusCollection}}},
+					{view:"text",label:"Job",labelWidth:100,name:"Job"},
+					{view:"combo",label:"Company",labelWidth:100,name:"CompanyID",options: { body: {template:"#Company#",data:companyCollection}},required:true,invalidMessage:"Company can not be empty"},
+					{view:"text",label:"Website",labelWidth:100,name:"Website"},
+					{view:"text",label:"Address",labelWidth:100,name:"Address"},
+					{view:"text",label:"Email",labelWidth:100,name:"Email",placeholder:"someone@example.com",required:true},
+					{view:"text",label:"Skype",labelWidth:100,name:"Skype"},
+					{view:"text",label:"Phone",labelWidth:100,name:"Phone",placeholder:"375-25-1234567", pattern:{ mask:"###-## #######", allow:/[0-9]/g}},
 					{view:"spacer"},
 					{ cols: [
-						{ view: "button",value: "Cancel",click:() => {
-							this.$$("employeesForm").hide();
-							this.$$("toolbar").hide();
-						}},
 						{ view: "button",localId:"addSaveButton",value: "Add",
 							click:() => {
 								this.saveDate();
 							}
-						}
+						},
+						{ view: "button",value: "Cancel",click:() => {
+							this.$$("employeesForm").hide();
+							this.$$("toolbar").hide();
+						}},
 					]},
 				]}],
 			rules: {
