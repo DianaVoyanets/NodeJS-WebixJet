@@ -5,20 +5,31 @@ module.exports = {
 		var limit = (req.query.count || 20) * 1;
 		var offset = (req.query.start || 0) * 1;
         
-		var where = req.query.filter ? { 
-			FirstName: { $like: "%" + req.query.filter.FirstName + "%" },
-			LastName: { $like: "%" + req.query.filter.LastName + "%" },
-			Address: { $like: "%" + req.query.filter.Address + "%" },
-			Email: { $like: "%" + req.query.filter.Email + "%" },
-			Phone: { $like: "%" + req.query.filter.Phone + "%" },
-			Skype: { $like: "%" + req.query.filter.Skype + "%" },
-			Website: { $like: "%" + req.query.filter.Website + "%" },
-		} : {};
-		
-		var count = db.Employees.findAndCountAll({ where });
+		var where = req.query.filter || {};
 
+		for (var filter in where) {
+			var filterValue = where[filter];
+            
+			if (typeof filterValue === "string") {
+				var correctValue = filterValue.trim();
+
+				if (correctValue.length > 0) {
+					where[filter] = { $like: "%" + correctValue + "%" };
+					continue;
+				}
+			} 
+            
+			delete where[filter];
+		}
+        
+		console.log(where);
+
+		var order = req.query.sort ? Object.entries(req.query.sort) : [];
+        
+		var count = db.Employees.findAndCountAll({ where });
+        
 		var page = db.Employees.findAll({
-			where, limit, offset
+			where, limit, offset, order
 		});
 
 		Promise

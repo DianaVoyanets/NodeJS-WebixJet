@@ -6,8 +6,6 @@ var sequelize = new Sequelize("sampledb","root","1",{
 	storage: "database.sqlite"
 });
 
-
-
 var Employees = sequelize.define("Employees", {
 	FirstName: Sequelize.STRING,
 	LastName: Sequelize.STRING,
@@ -94,5 +92,5 @@ sequelize.sync({ force: true }).then(() => {
 });
 
 module.exports = {
-	Employees, Activity, Statuses, ActivityType,Company,File
+	Employees, Activity, Statuses, ActivityType, Company, File
 };
