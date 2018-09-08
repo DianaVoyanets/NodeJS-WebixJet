@@ -102,7 +102,6 @@ export default class Employees extends JetView {
 					width: 120,
 					click: () => {
 						let id = this.getParam("id");
-						console.log(id);
 						webix.confirm({
 							text:"Do you still want to remove this employee?",
 							callback: (result) => {

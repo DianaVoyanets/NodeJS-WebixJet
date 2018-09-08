@@ -5,7 +5,6 @@ import {companyCollection} from "models/companyCollection";
 
 export default class employeesForm extends JetView {
 	config() {
-		
 		var toolbar = {
 			view: "toolbar",
 			localId:"toolbar",
@@ -18,7 +17,7 @@ export default class employeesForm extends JetView {
 			view: "form",
 			localId: "employeesForm",
 			cols: [
-				{ margin: 5,rows: [
+				{rows: [
 					{view:"text",label:"First name",labelWidth:100,name:"FirstName",invalidMessage:"First Name can not be empty",required:true},
 					{view:"text",label:"Last name",labelWidth:100,name:"LastName",invalidMessage:"Last Name can not be empty",required:true},
 					{view:"combo",label:"Status",labelWidth:100,name:"StatusID",options: { body:{template:"#Value#",data:statusCollection}}},
@@ -37,8 +36,11 @@ export default class employeesForm extends JetView {
 							}
 						},
 						{ view: "button",value: "Cancel",click:() => {
-							this.$$("employeesForm").hide();
-							this.$$("toolbar").hide();
+							this.app.show("/top/employeesList");
+							if(this.$$("employeesForm").isVisible) {
+								this.$$("employeesForm").hide();
+								this.$$("toolbar").hide();
+							}
 						}},
 					]},
 				]}],
@@ -57,6 +59,10 @@ export default class employeesForm extends JetView {
 			]
 		};
 		return ui;
+	}
+
+	init() {
+		this.on(this.app,"onClickemployeesForm",()=>this.$$("employeesForm").show());
 	}
 
 	getEmployeesForm() {
