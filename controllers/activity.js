@@ -9,7 +9,7 @@ module.exports = {
 	removeData: (req, res) => {
 		db.Activity.findById(req.params.activityId)
 			.then((activity) => 
-			activity.destroy()
+				activity.destroy()
 					.then(()=>
 						res.json({})));
 	},
@@ -22,7 +22,7 @@ module.exports = {
 	updateData: (req, res) => {
 		db.Activity.findById(req.params.activityId)
 			.then((activity) => 
-			activity.update(req.body))
+				activity.update(req.body))
 			.then(() => 
 				res.json({}));
 	}

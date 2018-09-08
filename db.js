@@ -6,6 +6,8 @@ var sequelize = new Sequelize("sampledb","root","1",{
 	storage: "database.sqlite"
 });
 
+
+
 var Employees = sequelize.define("Employees", {
 	FirstName: Sequelize.STRING,
 	LastName: Sequelize.STRING,
@@ -18,6 +20,7 @@ var Employees = sequelize.define("Employees", {
 	Skype: Sequelize.STRING,
 	Phone: Sequelize.STRING,
 });
+
 
 var Activity = sequelize.define("activity",{
 	Details: Sequelize.STRING,
@@ -51,19 +54,21 @@ sequelize.sync({ force: true }).then(() => {
 	Company.create({Company:"XB Software"});
 	Company.create({Company:"Epam"});
 
-	Employees.create({
-		Address:"qeqwe", 
-		Email:"alex@gmail.com",
-		FirstName:"qweqwe",
-		Job:"qwewqe",
-		LastName:"",
-		CompanyID: 1,
-		Phone:"",
-		Skype:"",
-		StatusID:0,
-		Website:""
-	});
-	
+	for(var i = 0;i < 100;i++) {
+		Employees.create({
+			Address:"qeqwe", 
+			Email:"alex@gmail.com",
+			FirstName:"qweqwe",
+			Job:"qwewqe",
+			LastName:"",
+			CompanyID: 1,
+			Phone:"",
+			Skype:"",
+			StatusID:0,
+			Website:""
+		});
+	}
+
 	Activity.create({
 		Details: "Some",
 		TypeID: 2,

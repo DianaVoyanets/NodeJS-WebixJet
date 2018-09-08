@@ -2,9 +2,9 @@ var db = require("../db");
 
 module.exports = {
 	getData: (req, res) =>  {
-		var limit = (req.query.count || 20)*1;
-		var offset = (req.query.start || 0)*1;
-
+		var limit = (req.query.count || 20) * 1;
+		var offset = (req.query.start || 0) * 1;
+        
 		var where = req.query.filter ? { 
 			FirstName: { $like: "%" + req.query.filter.FirstName + "%" },
 			LastName: { $like: "%" + req.query.filter.LastName + "%" },
@@ -15,26 +15,19 @@ module.exports = {
 			Website: { $like: "%" + req.query.filter.Website + "%" },
 		} : {};
 		
-	
-		var querySort = req.query.sort;
-		var order = [];
-
-		if (querySort) {
-			var key = Object.entries(req.query.sort)[0][0];
-			if (querySort[key]) {
-				order.push([key,querySort[key]]);
-			}
-		}
-		
-		var count = db.Employees.findAndCountAll({});
+		var count = db.Employees.findAndCountAll({ where });
 
 		var page = db.Employees.findAll({
-			where,limit,offset,order
+			where, limit, offset
 		});
 
-		Promise.all([count,page]).then(data => res.json({
-			pos:offset, total_count:data[0], data: data[1] 
-		}));
+		Promise
+			.all([count, page])
+			.then(data => res.json({
+				pos: offset, 
+				total_count: data[0].count, 
+				data: data[1]
+			}));
 	},
 
 	removeData: (req, res) => {

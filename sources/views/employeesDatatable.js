@@ -9,6 +9,7 @@ export default class employeesDatatable extends JetView{
 			view: "datatable",
 			localId: "employeesDatatable",
 			columns: [
+				{id: "id"},
 				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:160,sort:"server"},
 				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:160,sort:"server"},
 				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 160,sort:"server"},
@@ -16,12 +17,10 @@ export default class employeesDatatable extends JetView{
 				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:160},
 				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:160},
 				{id: "Website",header: ["Website",{content:"serverFilter"}],sort:"server",width: 160},
-				{id: "CompanyID",header: "Company",options: companyCollection,width: 160,fillspace:true},
+				{id: "CompanyID",header: "Company",options: companyCollection,width: 160},
 				{id: "pencil-icon", header:"",template: "{common.editIcon()}",width:50},
 				{id: "trash-icon", header: "",template: "{common.trashIcon()}",width:50},
 			],
-			// datafetch:15,
-			// loadahead:30,
 			onClick: {
 				"fa-trash": function(e, id) {
 					webix.confirm({
@@ -42,6 +41,7 @@ export default class employeesDatatable extends JetView{
 			save: "rest->http://localhost:3001/employees/"
 		};
 	}
+    
 	init() {
 		this._jetPopup = this.ui(FormPopupView);
 	}
