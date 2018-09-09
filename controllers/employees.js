@@ -7,22 +7,17 @@ module.exports = {
         
 		var where = req.query.filter || {};
 
-		for (var filter in where) {
-			var filterValue = where[filter];
+		for (var filter in queryFilter) {
+			var filterValue = queryFilter[filter];
             
 			if (typeof filterValue === "string") {
 				var correctValue = filterValue.trim();
 
 				if (correctValue.length > 0) {
 					where[filter] = { $like: "%" + correctValue + "%" };
-					continue;
 				}
-			} 
-            
-			delete where[filter];
-		}
-        
-		console.log(where);
+			}
+		} 
 
 		var order = req.query.sort ? Object.entries(req.query.sort) : [];
         
@@ -32,15 +27,16 @@ module.exports = {
 			where, limit, offset, order
 		});
 
+		var employeesData = db.Employees.findAndCountAll({ where, limit, offset, order });
+        
 		Promise
-			.all([count, page])
+			.resolve(employeesData)
 			.then(data => res.json({
 				pos: offset, 
-				total_count: data[0].count, 
-				data: data[1]
+				total_count: data.count, 
+				data: data.rows
 			}));
 	},
-
 	removeData: (req, res) => {
 		db.Employees.findById(req.params.employeesId)
 			.then((employees) => 
