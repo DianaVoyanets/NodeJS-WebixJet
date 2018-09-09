@@ -20,15 +20,8 @@ module.exports = {
 		} 
 
 		var order = req.query.sort ? Object.entries(req.query.sort) : [];
-        
-		var count = db.Employees.findAndCountAll({ where });
-        
-		var page = db.Employees.findAll({
-			where, limit, offset, order
-		});
-
-		var employeesData = db.Employees.findAndCountAll({ where, limit, offset, order });
-        
+        	var employeesData = db.Employees.findAndCountAll({ where, limit, offset, order });
+		
 		Promise
 			.resolve(employeesData)
 			.then(data => res.json({
