@@ -5,8 +5,9 @@ module.exports = {
 		var limit = (req.query.count || 20) * 1;
 		var offset = (req.query.start || 0) * 1;
         
-		var where = req.query.filter || {};
-
+		var queryFilter = req.query.filter;
+		var where = {};
+		
 		for (var filter in queryFilter) {
 			var filterValue = queryFilter[filter];
             
