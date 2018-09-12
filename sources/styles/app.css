@@ -165,8 +165,10 @@ status_good{
 }
 
 span.list-information {
-    position: absolute;
     padding-top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .user-photo img {
@@ -174,8 +176,7 @@ span.list-information {
     height: 200px;
 }
 
-
-.addEmployees.webix_el_button button{
+.addEmployees.webix_el_button button {
 	text-align: center;
 }
 
