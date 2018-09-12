@@ -37,7 +37,7 @@ export default class employeesForm extends JetView {
 						},
 						{ view: "button",value: "Cancel",click:() => {
 							this.app.show("/top/employeesList");
-							if(this.$$("employeesForm").isVisible) {
+							if (this.$$("employeesForm").isVisible) {
 								this.$$("employeesForm").hide();
 								this.$$("toolbar").hide();
 							}
@@ -48,21 +48,23 @@ export default class employeesForm extends JetView {
 				"FirstName": webix.rules.isNotEmpty,
 				"LastName": webix.rules.isNotEmpty,
 				"Email": webix.rules.isEmail,
+				"CompanyID": webix.rules.isNotEmpty
 			},
 		};
 
-		var ui = {
+		return {
 			rows: [
 				toolbar,
 				employeesForm,
 				{view:"spacer"}
 			]
 		};
-		return ui;
 	}
 
 	init() {
-		this.on(this.app,"onClickemployeesForm",()=>this.$$("employeesForm").show());
+		this.on(this.app,"onClickemployeesForm",()=> {
+			this.$$("employeesForm").show();
+		});
 	}
 
 	getEmployeesForm() {
@@ -71,7 +73,7 @@ export default class employeesForm extends JetView {
         
 	saveDate() {
 		if (this.getEmployeesForm().validate()) {
-			employeesCollection.add(this.getEmployeesForm().getValues());    
+			employeesCollection.add(this.getEmployeesForm().getValues());   
 			this.show("employeesInformation?id=1");
 		}
 	}

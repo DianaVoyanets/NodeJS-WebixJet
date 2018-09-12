@@ -10,6 +10,7 @@ export default class FormPopupView extends JetView {
 			localId: "formPopup",
 			head:"Edit employees datatable",
 			position:"center",
+			modal: true,
 			height: 800,
 			body:{
 				view:"form",
@@ -18,8 +19,8 @@ export default class FormPopupView extends JetView {
 					{ cols:[
 						{
 							rows: [
-								{view:"text",label:"FirstName", name:"FirstName",width:250},
-								{view:"text",label:"LastName", name:"LastName"},
+								{view:"text",label:"FirstName", name:"FirstName",width:250,invalidMessage:"First Name can not be empty"},
+								{view:"text",label:"LastName", name:"LastName",invalidMessage:"Last Name can not be empty"},
 								{view:"text",label:"Address", name:"Address"},
 								{view:"text",label:"Email", name:"Email"},
 							],
@@ -29,7 +30,7 @@ export default class FormPopupView extends JetView {
 								{view:"text",label:"Phone", name:"Phone",width: 250},
 								{view:"text",label:"Skype", name:"Skype"},
 								{view:"text",label:"Website", name:"Website"},
-								{view:"combo",label:"Company", name:"CompanyID",options: { body: {template:"#Company#",data:companyCollection}}},
+								{view:"combo",label:"Company", name:"CompanyID",options: { body: {template:"#Company#",data:companyCollection}},invalidMessage:"Company Name can not be empty"},
 								{view: "spacer"}
 							]
 						}
@@ -40,7 +41,13 @@ export default class FormPopupView extends JetView {
 						{ view: "button",value: "Save",width: 120,click:() => this.saveData()},
 						{ view: "button",value: "Cancel",width: 120,click: ()=> this.$$("formPopup").hide()},
 					]}
-				]
+				],
+				rules: {
+					"FirstName": webix.rules.isNotEmpty,
+					"LastName": webix.rules.isNotEmpty,
+					"Email": webix.rules.isEmail,
+					"CompanyID": webix.rules.isNotEmpty
+				},
 			}
 		};
 	}
@@ -59,7 +66,7 @@ export default class FormPopupView extends JetView {
 		var values = this.getForm().getValues();
 		if (this.getForm().validate()) {
 			employeesCollection.updateItem(values.id, values);
-			this.getForm().hide();
+			this.$$("formPopup").hide();
 		}
 	}
 }

@@ -5,7 +5,6 @@ import {employeesCollection} from "models/employeesCollection";
 
 export default class PopupView extends JetView {
 	config() {
-
 		return {
 			view:"window", 
 			move:true,
@@ -29,11 +28,6 @@ export default class PopupView extends JetView {
 						{view:"button",value: "Cancel",width: 110,click:()=> this.getForm().hide()},
 					]}
 				],
-				rules: {
-					"Details": webix.rules.isNotEmpty,
-					"TypeID":webix.rules.isNotEmpty,
-					"ContactID":webix.rules.isNotEmpty,
-				},
 				autoheight:true,
 				autowidth:true,
 			}

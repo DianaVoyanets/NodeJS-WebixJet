@@ -13,8 +13,8 @@ export default class DataView extends JetView {
 				{view: "spacer"},
 				{view: "button",name: "Export",id: "export_button",type:"iconButton",icon:"file-excel-o",label: "Export to Excel",autowidth: true,
 					click:() => {
-						webix.toExcel(this.$$("activityDataTable"),
-							{ filename:"ActivityTable",ignore: { "State" :true,"pencil-icon" :true,"trash-icon": true}}
+						webix.toExcel(this.$$("activityDatatable"),
+							{ filename:"ActivityTable",ignore: { "State" :true,"trash-icon": true}}
 						);
 					}},
 				{view: "button",name: "Refresh",id: "refresh_button",type: "iconButton",icon:"refresh",label: "Refresh",autowidth: true,
@@ -36,7 +36,7 @@ export default class DataView extends JetView {
 					localId: "activityDatatable",
 					select: true,
 					columns:[
-						{ id:"State",header:"",template:"{common.checkbox()}",width: 50},
+						{ id:"State",header:"",template:"{common.checkbox()}",width: 50,edit: "text"},
 						{ id:"TypeID", header:["Activity type",{content:"selectFilter"}], width:250,sort:"string",options: activityTypeCollection,fillspace:true},
 						{ id:"Details", header:["Details",{content:"textFilter"}],width:250,sort:"string"},
 						{ id:"ContactID", header:["Contact",{content:"selectFilter"}],width:250,sort:"string",options: employeesCollection},
@@ -65,14 +65,12 @@ export default class DataView extends JetView {
 			]	
 		};
 
-		var ui = {
+		return {
 			rows: [
 				toolbar,
 				activityTable
 			]
 		};
-        
-		return ui;
 	}
 	
 	getActivityDatatable() {
@@ -88,11 +86,11 @@ export default class DataView extends JetView {
 						filter.setValue("");
 					}	 
 					else filter.value = "";					
-				  }
+				}
 			}
 		});	
 		this.getActivityDatatable().clearAll();
-		this.getActivityDatatable().sync(activityCollection);
+		this.getActivityDatatable().load(activityCollection.data.url);
 	}
 	
 	init() {

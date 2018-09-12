@@ -6,6 +6,7 @@ export default class AddCompanyFormPopupView extends JetView {
 		return {
 			view:"window", 
 			move:true,
+			modal: true,
 			localId: "formPopup",
 			head:"Add company",
 			position:"center",
@@ -13,18 +14,22 @@ export default class AddCompanyFormPopupView extends JetView {
 				view:"form",
 				localId: "form",
 				elements: [
-					{view: "text",label: "Company",name: "Company"},
+					{view: "text",id: "Company",label: "Company",name: "Company",invalidMessage: "Company Name can not be empty"},
 					{cols:[
 						{view: "spacer"},
 						{view: "button",value: "Add",width: 120,click:() => this.saveData()},
 						{view: "button",value: "Cancel",width: 120,click: () => this.hide()},
-					]}
+					]},
 				],
+				rules: {
+					"Company": webix.rules.isNotEmpty
+				},
 			}
 		};
 	}
     
-	showWindow(id) {
+	showWindow() {
+		this.$$("form").clear();
 		this.getRoot().show();
 	}
     

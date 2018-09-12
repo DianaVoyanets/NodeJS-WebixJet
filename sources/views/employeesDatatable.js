@@ -8,19 +8,28 @@ export default class employeesDatatable extends JetView{
 		return {
 			view: "datatable",
 			localId: "employeesDatatable",
+			editable: "true",
 			columns: [
 				{id: "id"},
-				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:160,sort:"server"},
-				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:160,sort:"server"},
-				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 160,sort:"server"},
-				{id: "Email",header: ["Email",{content:"serverFilter"}],width:160,sort:"server"},
-				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:160},
-				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:160},
-				{id: "Website",header: ["Website",{content:"serverFilter"}],sort:"server",width: 160},
-				{id: "CompanyID",header: "Company",options: companyCollection,width: 160},
+				{id: "FirstName",header: ["First Name",{content:"serverFilter"}],width:160,sort:"server",editor: "text"},
+				{id: "LastName",header: ["Last Name",{content:"serverFilter"}],width:160,sort:"server",editor: "text"},
+				{id: "Address",header: ["Address",{content:"serverFilter"}],width: 160,sort:"server",editor: "text"},
+				{id: "Email",header: ["Email",{content:"serverFilter"}],width:160,sort:"server",editor: "text"},
+				{id: "Phone",header: ["Phone",{content:"serverFilter"}],sort:"server",width:160,editor: "text"},
+				{id: "Skype",header: ["Skype",{content:"serverFilter"}],sort:"server",width:160,editor: "text"},
+				{id: "Website",header: ["Website",{content:"serverFilter"}],sort:"server",width: 160,editor: "text"},
+				{id: "CompanyID",header: ["Company",{content:"serverSelectFilter"}], options:companyCollection,width: 160},
 				{id: "pencil-icon", header:"",template: "{common.editIcon()}",width:50},
 				{id: "trash-icon", header: "",template: "{common.trashIcon()}",width:50},
 			],
+			rules: {
+				"FirstName": webix.rules.isNotEmpty,
+				"LastName": webix.rules.isNotEmpty,
+				"Address": webix.rules.isNotEmpty,
+				"Email": webix.rules.isEmail,
+				"Skype": webix.rules.isNotEmpty,
+				"Website": webix.rules.isNotEmpty
+			},
 			onClick: {
 				"fa-trash": function(e, id) {
 					webix.confirm({
@@ -37,7 +46,7 @@ export default class employeesDatatable extends JetView{
 					this._jetPopup.showWindow(id);
 				}
 			},
-			url: "http://localhost:3001/employees",
+			url: "http://localhost:3001/employeesDynamicData",
 			save: "rest->http://localhost:3001/employees/"
 		};
 	}
