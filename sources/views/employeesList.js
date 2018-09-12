@@ -107,21 +107,35 @@ export default class Employees extends JetView {
 					click: () => {
 						webix.confirm({
 							text:"Do you still want to remove this employee?",
-							callback: () => { 
-								let id = this.employeeId;
-								if (!id) return;
+							callback: (result) => {
+								if(result) {
+									let id = this.employeeId;
+									if (!id) return;
             
-								let activitiesIds = activityCollection
-									.find((activity) => activity.ContactID == id)
-									.map((activity) => activity.id);
+									let activitiesIds = activityCollection
+										.find((activity) => activity.ContactID == id)
+										.map((activity) => activity.id);
                                     
-								employeesCollection.remove(id);
-								activityCollection.remove(activitiesIds);
-								this.app.callEvent("onDataDelete",[]);
-                                    
-								this.employeeId = null;
+									employeesCollection.remove(id);
+									activityCollection.remove(activitiesIds);
+									this.app.callEvent("onDataDelete",[]);      
+									this.employeeId = null;
+									return false;
+								}
 							}
 						});
+						// 	let id = this.employeeId;
+						// 	if (!id) return;
+            
+						// 	let activitiesIds = activityCollection
+						// 		.find((activity) => activity.ContactID == id)
+						// 		.map((activity) => activity.id);
+                                    
+						// 	employeesCollection.remove(id);
+						// 	activityCollection.remove(activitiesIds);
+						// 	this.app.callEvent("onDataDelete",[]);
+                                    
+							
 					},
 				}
 			]
