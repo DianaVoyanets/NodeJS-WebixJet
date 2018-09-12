@@ -12,6 +12,7 @@ var employees = require("./controllers/employees");
 app.put("/employees/:employeesId",employees.updateData);
 app.delete("/employees/:employeesId",employees.removeData);
 app.post("/employees",employees.addData);
+app.get("/employeesDynamicData",employees.getDynamicData);
 app.get("/employees",employees.getData);
 
 var activity = require("./controllers/activity");
@@ -27,6 +28,7 @@ app.put("/statuses/:statusId",statuses.updateData);
 app.delete("/statuses/:statusId",statuses.removeData);
 app.post("/statuses",statuses.addData);
 app.get("/statuses",statuses.getData);
+
 
 var activityTypes = require("./controllers/activityType");
 
