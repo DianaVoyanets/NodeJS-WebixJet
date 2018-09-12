@@ -1,43 +1,39 @@
 var db = require("../db");
 
 module.exports = {
-	getData: (req, res) =>  {
+    
+    getData : (req, res) => {
+		db.Employees.findAll()
+			.then(data => res.json(data));
+    },
+	getDynamicData: (req, res) =>  {
 		var limit = (req.query.count || 20) * 1;
 		var offset = (req.query.start || 0) * 1;
         
-		var where = req.query.filter || {};
+		var queryFilter = req.query.filter;
+		var where = {};
 
-		for (var filter in where) {
-			var filterValue = where[filter];
+		for (var filter in queryFilter) {
+			var filterValue = queryFilter[filter];
             
 			if (typeof filterValue === "string") {
 				var correctValue = filterValue.trim();
 
 				if (correctValue.length > 0) {
 					where[filter] = { $like: "%" + correctValue + "%" };
-					continue;
 				}
-			} 
-            
-			delete where[filter];
+			}
 		}
         
-		console.log(where);
-
 		var order = req.query.sort ? Object.entries(req.query.sort) : [];
+		var employeesData = db.Employees.findAndCountAll({ where, limit, offset, order });
         
-		var count = db.Employees.findAndCountAll({ where });
-        
-		var page = db.Employees.findAll({
-			where, limit, offset, order
-		});
-
 		Promise
-			.all([count, page])
+			.resolve(employeesData)
 			.then(data => res.json({
 				pos: offset, 
-				total_count: data[0].count, 
-				data: data[1]
+				total_count: data.count, 
+				data: data.rows
 			}));
 	},
 
