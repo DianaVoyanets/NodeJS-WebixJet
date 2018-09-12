@@ -1,6 +1,5 @@
 import {JetView} from "webix-jet";
 import {employeesCollection} from "models/employeesCollection";
-import {activityCollection} from "models/activityCollection";
 
 export default class employeesInformation extends JetView {
 	config() {
@@ -14,7 +13,7 @@ export default class employeesInformation extends JetView {
 				align: "center",
 				label: "#FirstName# #LastName#", 
 			},
-		],
+			],
 		};
         
 		var iconTemplate = {
@@ -38,25 +37,23 @@ export default class employeesInformation extends JetView {
 			}
 		};
         
-		var ui = {
+		return  {
 			rows: [
 				toolbar,
 				iconTemplate,
 			],
 		};
         
-		return ui;
 	}
 
 	getId() {
 		return this.getParam("id",true);
 	}
-    
+
 	urlChange() {
 		employeesCollection.waitData.then(()=>{
 			if (this.getId() && employeesCollection.exists(this.getId())) {
 				let employeesValues = employeesCollection.getItem(this.getId());
-                
 				this.$$("mylabel").setValue(employeesValues.FirstName + " " + employeesValues.LastName);
 				this.$$("iconTemplate").setValues(employeesValues);
 			}
