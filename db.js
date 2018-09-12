@@ -52,18 +52,18 @@ sequelize.sync({ force: true }).then(() => {
 	Company.create({Company:"XB Software"});
 	Company.create({Company:"Epam"});
 
-	for(var i = 0;i < 100;i++) {
+	for (var i = 0; i < 100;i++) {
 		Employees.create({
 			Address:"qeqwe", 
 			Email:"alex@gmail.com",
 			FirstName:"qweqwe",
 			Job:"qwewqe",
-			LastName:"",
+			LastName:"qweqwe",
 			CompanyID: 1,
-			Phone:"",
-			Skype:"",
+			Phone:"3751981981",
+			Skype:"asdasd",
 			StatusID:0,
-			Website:""
+			Website:"adasdasd"
 		});
 	}
 
