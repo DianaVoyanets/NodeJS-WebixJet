@@ -23,7 +23,7 @@ export default class TopView extends JetView{
 
 		var ui = {
 			type: "line",  rows: [
-				{ view: "toolbar",elements: [{type: "header", id: "topLabel", template: "#value#", css: "topLabel"}]},
+				{view: "toolbar",elements: [{type: "header", id: "topLabel", template: "#value#", css: "topLabel"}]},
 				{
 					cols: [
 						{
@@ -31,7 +31,7 @@ export default class TopView extends JetView{
 							padding: 10, margin: 20, borderless: true, rows: [menu]
 						},
 						{
-							rows: [{ height: 10 },
+							rows:[{ height: 10 },
 								{
 									type: "clean", css: "app-right-panel", padding: 4, rows: [
 										{ $subview: true }
