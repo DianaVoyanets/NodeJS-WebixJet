@@ -28,6 +28,12 @@ export default class PopupView extends JetView {
 						{view:"button",value: "Cancel",width: 110,click:()=> this.getForm().hide()},
 					]}
 				],
+				rules: {
+					"FirstName": webix.rules.isNotEmpty,
+					"LastName": webix.rules.isNotEmpty,
+					"Email": webix.rules.isEmail,
+					"CompanyID": webix.rules.isNotEmpty
+				},
 				autoheight:true,
 				autowidth:true,
 			}
